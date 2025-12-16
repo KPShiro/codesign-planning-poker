@@ -6,7 +6,12 @@
     "license": "ISC",
     "packageManager": "pnpm@10.10.0",
     "scripts": {
-        "dev": "tsx watch index.ts"
+        "dev": "tsx watch index.ts",
+        "build": "tsc",
+        "start": "node dist/index.js",
+        "type-check": "tsc --noEmit",
+        "lint": "eslint .",
+        "clean": "rm -rf dist .turbo node_modules"
     },
     "dependencies": {
         "@codesign-planning-poker/shared": "workspace:*",

@@ -2,6 +2,18 @@
     "name": "@codesign-planning-poker/shared",
     "version": "1.0.0",
     "type": "module",
-    "main": "index.js",
-    "types": "index.ts"
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "type-check": "tsc --noEmit",
+        "lint": "eslint . --max-warnings 0",
+        "clean": "rm -rf dist .turbo node_modules"
+    },
+    "devDependencies": {
+        "typescript": "^5.9.3",
+        "eslint": "^9.39.2",
+        "eslint-config-prettier": "^10.1.8"
+    }
 }

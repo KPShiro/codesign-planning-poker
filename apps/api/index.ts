@@ -5,13 +5,23 @@ import cors from 'cors';
 import { EVENTS, type PokerEvent } from '@codesign-planning-poker/shared';
 
 const app = express();
-app.use(cors());
+
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:4173'];
+
+app.use(
+    cors({
+        origin: allowedOrigins,
+        methods: ['GET', 'POST'],
+        credentials: true,
+    }),
+);
 
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:5173',
+        origin: allowedOrigins,
         methods: ['GET', 'POST'],
+        credentials: true,
     },
 });
 

@@ -3,7 +3,14 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "dev": "turbo run dev --parallel"
+        "dev": "turbo run dev --parallel",
+        "start": "turbo run start --parallel",
+        "build": "turbo run build",
+        "lint": "turbo run lint",
+        "format:check": "prettier --check \"**/*.{ts,tsx,md,json}\"",
+        "format:fix": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+        "type-check": "turbo run type-check",
+        "clean": "turbo run clean && rm -rf node_modules .turbo"
     },
     "author": "Codesign",
     "license": "ISC",

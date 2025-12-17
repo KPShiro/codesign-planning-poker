@@ -2,15 +2,14 @@
     "name": "codesign-planning-poker",
     "version": "1.0.0",
     "main": "index.js",
+    "private": true,
     "scripts": {
-        "dev": "turbo run dev --parallel",
-        "start": "turbo run start --parallel",
         "build": "turbo run build",
         "lint": "turbo run lint",
+        "dev": "turbo run dev --parallel",
+        "start": "turbo run start --parallel",
         "format:check": "prettier --check \"**/*.{ts,tsx,md,json}\"",
-        "format:fix": "prettier --write \"**/*.{ts,tsx,md,json}\"",
-        "type-check": "turbo run type-check",
-        "clean": "turbo run clean && rm -rf node_modules .turbo"
+        "format:fix": "prettier --write \"**/*.{ts,tsx,md,json}\""
     },
     "author": "Codesign",
     "license": "ISC",

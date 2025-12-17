@@ -1,24 +1,24 @@
 ## Description
 
-This PR introduces...
+A few sentences describing the content and purpose of this PR...
 
 ## Changes
 
-- [ ] Added `X` component
-- [ ] Updated logic in `Y` service
-- [ ] Fixed bug related to `Z`
+- ...
+- ...
+- ...
 
-## How to Test
+## How to Test (if applicable)
 
-1. Run `pnpm dev`
-2. Open frontend at `http://localhost:5173`
-3. Join a room as "User A"
-4. Perform action X...
-5. Observe that...
+1. ...
+2. ...
+3. ...
 
-## Screenshots
+## Screenshots (if applicable)
 
-<!-- ADD only if applicable -->
+| Before            | After            |
+| ----------------- | ---------------- |
+| SCREENSHOT_BEFORE | SCREENSHOT_AFTER |
 
 ## Checklist
 

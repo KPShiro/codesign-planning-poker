@@ -1,0 +1,24 @@
+@media (prefers-color-scheme: dark) {
+    :root {
+        --codesign-color-primary: var(--color-emerald-400);
+        --codesign-color-on-primary: var(--color-emerald-950);
+
+        --codesign-color-secondary: var(--color-emerald-700);
+        --codesign-color-on-secondary: var(--color-emerald-50);
+
+        --codesign-color-danger: var(--color-red-400);
+        --codesign-color-on-danger: var(--color-red-100);
+
+        --codesign-color-success: var(--color-green-700);
+        --codesign-color-on-success: var(--color-green-50);
+
+        --codesign-color-surface-0: var(--color-zinc-900);
+        --codesign-color-on-surface-0: var(--color-zinc-100);
+
+        --codesign-color-surface-1: var(--color-zinc-800);
+        --codesign-color-on-surface-1: var(--color-zinc-100);
+
+        --codesign-color-text-0: var(--color-zinc-100);
+        --codesign-color-text-1: var(--color-zinc-400);
+    }
+}

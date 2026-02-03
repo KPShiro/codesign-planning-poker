@@ -1,5 +1,66 @@
+@import 'tailwindcss';
+
+@import './themes/light.css';
+@import './themes/dark.css';
+
+@theme {
+    --color-primary: var(--codesign-color-primary);
+    --color-on-primary: var(--codesign-color-on-primary);
+
+    --color-secondary: var(--codesign-color-secondary);
+    --color-on-secondary: var(--codesign-color-on-secondary);
+
+    --color-danger: var(--codesign-color-danger);
+    --color-on-danger: var(--codesign-color-on-danger);
+
+    --color-success: var(--codesign-color-success);
+    --color-on-success: var(--codesign-color-on-success);
+
+    --color-surface-0: var(--codesign-color-surface-0);
+    --color-on-surface-0: var(--codesign-color-on-surface-0);
+
+    --color-surface-1: var(--codesign-color-surface-1);
+    --color-on-surface-1: var(--codesign-color-on-surface-1);
+
+    --color-text-0: var(--codesign-color-text-0);
+    --color-text-1: var(--codesign-color-text-1);
+
+    --font-sans: 'Arial', system-ui, sans-serif;
+
+    --opacity-disabled: 0.5;
+
+    --z-notifications: 100;
+
+    --animate-timer-progress: timer-progress 3s linear;
+    --animate-slide-in: slide-in 0.25s linear;
+
+    @keyframes timer-progress {
+        from {
+            width: 100%;
+        }
+        to {
+            width: 0;
+        }
+    }
+
+    @keyframes slide-in {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+}
+
+@utility text-decorative {
+    & {
+        @apply from-primary to-secondary bg-linear-to-r bg-clip-text font-medium text-transparent;
+    }
+}
+
 :root {
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
     line-height: 1.5;
     font-weight: 400;
 
@@ -11,5 +72,39 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+html,
 body {
+    @apply bg-surface-0 text-text-0 overscroll-none;
+}
+
+h1 {
+    @apply text-3xl leading-tight;
+}
+
+h2 {
+    @apply text-2xl leading-normal;
+}
+
+h3 {
+    @apply text-xl leading-normal;
+}
+
+h4 {
+    @apply text-lg leading-normal;
+}
+
+h5 {
+    @apply leading-normal;
+}
+
+h6 {
+    @apply text-sm leading-normal font-medium;
+}
+
+p {
+    @apply text-text-1 max-w-prose;
+}
+
+hr {
+    @apply my-4 border-current/10;
 }

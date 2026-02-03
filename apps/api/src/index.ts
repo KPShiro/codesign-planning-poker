@@ -1,43 +1,27 @@
 import express from 'express';
 import http from 'http';
-import { Server } from 'socket.io';
 import cors from 'cors';
-import { EVENTS, type PokerEvent } from '@codesign-planning-poker/shared';
+import { initSocket } from './socket.js';
+import roomRoutes from '@routes/room.routes.js';
 
 const app = express();
+const httpServer = http.createServer(app);
 
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:4173'];
+const PORT: number = 3000;
 
-app.use(
-    cors({
-        origin: allowedOrigins,
-        methods: ['GET', 'POST'],
-        credentials: true,
-    }),
-);
+const corsOptions: cors.CorsOptions = {
+    origin: true,
+    methods: ['GET', 'POST'],
+    credentials: true,
+};
 
-const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: allowedOrigins,
-        methods: ['GET', 'POST'],
-        credentials: true,
-    },
-});
+app.use(express.json());
+app.use(cors(corsOptions));
 
-io.on('connection', (socket) => {
-    console.log('User connected:', socket.id);
+app.use('/api/rooms', roomRoutes);
 
-    socket.on(EVENTS.TEST_PING, (data: PokerEvent) => {
-        console.log('Received ping:', data);
+initSocket(httpServer, corsOptions);
 
-        socket.emit(EVENTS.TEST_PONG, {
-            message: 'Pong from Server!',
-            timestamp: Date.now(),
-        } as PokerEvent);
-    });
-});
-
-server.listen(3000, () => {
-    console.log('SERVER RUNNING on http://localhost:3000');
+httpServer.listen(PORT, '192.168.0.91', () => {
+    console.log(`Server running on port ${PORT}`);
 });

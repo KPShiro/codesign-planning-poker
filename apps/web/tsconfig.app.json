@@ -24,6 +24,18 @@
         "noFallthroughCasesInSwitch": true,
         "noUncheckedSideEffectImports": true,
 
+        /* Paths */
+        "baseUrl": ".",
+        "paths": {
+            "@components/*": ["./src/components/*"],
+            "@config/*": ["./src/config/*"],
+            "@forms/*": ["./src/forms/*"],
+            "@features/*": ["./src/features/*"],
+            "@hooks/*": ["./src/hooks/*"],
+            "@utils/*": ["./src/utils/*"]
+            // Add paths to other aliases here as needed
+        },
+
         "composite": true
     },
     "include": ["src"]

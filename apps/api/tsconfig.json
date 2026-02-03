@@ -17,6 +17,15 @@
         "isolatedModules": true,
         "noUncheckedIndexedAccess": true,
 
+        "baseUrl": ".",
+        "paths": {
+            "@controllers/*": ["./src/controllers/*"],
+            "@handlers/*": ["./src/handlers/*"],
+            "@routes/*": ["./src/routes/*"],
+            "@services/*": ["./src/services/*"]
+            // Add paths to other aliases here as needed
+        },
+
         "composite": false
     },
     "include": ["."],

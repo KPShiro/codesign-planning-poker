@@ -1,10 +1,17 @@
 import DefaultPageLayout from '@components/page-layout/default-page-layout';
-import CreateAccountForm from './create-account-form';
+import AccountForm from '@components/account-form';
+import { useNavigate } from '@tanstack/react-router';
 
 function CreateAccountPage() {
+    const navigate = useNavigate();
+
     return (
         <DefaultPageLayout>
-            <CreateAccountForm />
+            <AccountForm
+                onSubmit={() => {
+                    navigate({ to: '/', replace: true });
+                }}
+            />
         </DefaultPageLayout>
     );
 }

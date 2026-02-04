@@ -1,21 +1,42 @@
+import type { StorageKey } from '@config/storage';
 import { LocalStorage } from '@utils/local-storage';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type UseStickyStateArgs<T = unknown> = {
-    storageKey: string;
-    defaultValue: T | null;
+    storageKey: StorageKey;
+    defaultValue?: T | null;
 };
 
-export function useStickyState<T = unknown>({ storageKey, defaultValue }: UseStickyStateArgs<T>) {
-    const [value, setValue] = useState<T>(() => {
-        const storedValue = LocalStorage.getData(storageKey);
+export function useStickyState<T = unknown>({
+    storageKey,
+    defaultValue = null,
+}: UseStickyStateArgs<T>) {
+    const [value, setValue] = useState<T | null>(() => {
+        const storedValue = LocalStorage.getData<T>(storageKey);
 
-        return storedValue !== null ? JSON.parse(storedValue) : defaultValue;
+        if (storedValue !== null) {
+            return storedValue;
+        }
+
+        if (defaultValue !== null && defaultValue !== undefined) {
+            LocalStorage.saveData(storageKey, defaultValue);
+            return defaultValue as T;
+        }
+
+        return null;
     });
 
-    useEffect(() => {
-        LocalStorage.saveData(storageKey, JSON.stringify(value));
-    }, [storageKey, value]);
+    const setStickyValue = (newValue: T | null | ((prev: T | null) => T | null)) => {
+        const resolvedValue = newValue instanceof Function ? newValue(value) : newValue;
 
-    return [value, setValue] as const;
+        if (resolvedValue === null || resolvedValue === undefined) {
+            LocalStorage.removeData(storageKey);
+        } else {
+            LocalStorage.saveData(storageKey, resolvedValue);
+        }
+
+        setValue(resolvedValue);
+    };
+
+    return [value, setStickyValue] as const;
 }

@@ -41,7 +41,7 @@ export const useSettingsForm = ({ defaultValues, onSubmit }: UseSettingsFormProp
             onChange: settingsFormSchema,
         },
         onSubmit: async ({ value }) => {
-            playerAccount.updateUsername(value.account.username);
+            playerAccount.setUsername(value.account.username);
             await onSubmit?.(value);
             form.reset(value);
         },

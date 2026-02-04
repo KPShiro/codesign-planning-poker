@@ -7,18 +7,19 @@ type SectionButtonProps = ComponentProps<'button'> & {
     value?: string;
 };
 
-const SectionButton = ({ label, value, ...props }: SectionButtonProps) => {
+const SectionButton = ({ label, value, className, ...props }: SectionButtonProps) => {
     return (
         <button
-            type="button"
+            {...props}
+            type={props.type ?? 'button'}
             className={cn(
                 'flex w-full items-center justify-between gap-4 p-4',
                 'enabled:cursor-pointer enabled:hover:bg-current/5 enabled:active:bg-current/5',
                 'disabled:opacity-disabled disabled:cursor-not-allowed',
-                props.className,
+                className,
             )}
         >
-            <div className="text-white">{label}</div>
+            <div className="text-base">{label}</div>
             <div className="text-text-1 flex items-center gap-4">
                 {value ? <div className="text-sm font-medium">{value}</div> : null}
                 <ChevronRightIcon size={20} />

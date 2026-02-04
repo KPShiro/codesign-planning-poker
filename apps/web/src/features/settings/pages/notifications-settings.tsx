@@ -1,24 +1,21 @@
 import Button from '@components/button';
 import SecondaryPageLayout from '@components/page-layout/secondary-page-layout';
-import Section from '@components/section';
 import { Link } from '@tanstack/react-router';
 import { ArrowLeftIcon } from 'lucide-react';
 
-function AccountSettingsPage() {
+function NotificationsSettingsPage() {
     return (
         <SecondaryPageLayout
-            header={'Account'}
+            header={'Notifications'}
             action={
                 <Link to="/settings">
                     <Button size="sm" variant="outlined" icon={<ArrowLeftIcon />} />
                 </Link>
             }
         >
-            <Section title="Account">
-                <Section.Button label="Username" />
-            </Section>
+            NOTIFICATIONS_SETTINGS
         </SecondaryPageLayout>
     );
 }
 
-export default AccountSettingsPage;
+export default NotificationsSettingsPage;

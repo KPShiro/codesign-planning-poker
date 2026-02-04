@@ -34,6 +34,13 @@ export const useAudioController = () => {
         return trackConfig.files as readonly AudioFile<T>[];
     }, []);
 
+    const getSelectedAudioFile = useCallback(
+        <T extends AudioTrackId>(trackId: T) => {
+            return getAudioFiles(trackId).find((file) => file.id === selectedFiles[trackId]);
+        },
+        [getAudioFiles, selectedFiles],
+    );
+
     const playTrack = useCallback(
         <T extends AudioTrackId>(trackId: T, fileId?: AudioFileId<T>, forceRestart = true) => {
             const audio = audioInstances.current.get(trackId);
@@ -108,8 +115,8 @@ export const useAudioController = () => {
 
     return {
         volumes,
-        selectedFiles,
         getAudioFiles,
+        getSelectedAudioFile,
         playTrack,
         stopTrack,
         stopAllTracks,

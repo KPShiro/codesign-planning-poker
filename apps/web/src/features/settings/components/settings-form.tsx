@@ -103,7 +103,7 @@ function SettingsForm({ className }: SettingsFormProps) {
                 </Section.Container>
                 <Section.Button
                     label="Change audio file"
-                    value={audioController.selectedFiles.music}
+                    value={audioController.getSelectedAudioFile('music')?.label}
                 />
             </Section>
             <Section title="SFX">
@@ -135,7 +135,7 @@ function SettingsForm({ className }: SettingsFormProps) {
                 </Section.Container>
                 <Section.Button
                     label="Change audio file"
-                    value={audioController.selectedFiles.sfx}
+                    value={audioController.getSelectedAudioFile('sfx')?.label}
                 />
             </Section>
             <Section title="Notifications">
@@ -167,7 +167,7 @@ function SettingsForm({ className }: SettingsFormProps) {
                 </Section.Container>
                 <Section.Button
                     label="Change audio file"
-                    value={audioController.selectedFiles.notifications}
+                    value={audioController.getSelectedAudioFile('notifications')?.label}
                 />
             </Section>
         </form>

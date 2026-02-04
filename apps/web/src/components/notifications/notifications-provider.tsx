@@ -1,5 +1,5 @@
-import { type Notification, NotificationsContext } from '../hooks/use-notifications';
-import NotificationsList from '../components/notifications-list';
+import { type Notification, NotificationsContext } from '@hooks/use-notifications';
+import NotificationsList from './notifications-list';
 import { generateUUID } from '@utils/generate-uuid';
 import { useCallback, useMemo, useState, type PropsWithChildren } from 'react';
 

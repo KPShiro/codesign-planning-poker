@@ -1,4 +1,4 @@
-import { useNotifications } from '@features/notifications/hooks/use-notifications';
+import { useNotifications } from '@hooks/use-notifications';
 import NotificationsListItem from './notifications-list-item';
 
 const NotificationsList = () => {

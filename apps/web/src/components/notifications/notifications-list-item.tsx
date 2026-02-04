@@ -1,8 +1,5 @@
 import { useEffect } from 'react';
-import {
-    useNotifications,
-    type Notification,
-} from '@features/notifications/hooks/use-notifications';
+import { useNotifications, type Notification } from '@hooks/use-notifications';
 import { cn } from '@utils/cn';
 
 interface NotificationsListItemProps {

@@ -5,7 +5,7 @@ import FormField from '@components/form/form-field';
 import FormLabel from '@components/form/form-label';
 import TextInput from '@components/form/text-input';
 import FormError from '@components/form/form-error';
-import { useNotifications } from '@features/notifications/hooks/use-notifications';
+import { useNotifications } from '@hooks/use-notifications';
 import SliderInput from '@components/form/slider-input';
 import { useAudioController } from '@hooks/use-audio-controller';
 import { AUDIO_CONFIG } from '@config/audio-config';

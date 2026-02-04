@@ -1,6 +1,6 @@
 import DefaultPageLayout from '@components/page-layout/default-page-layout';
 import { useRoom } from '@features/games-list/hooks/use-room';
-import { useNotifications } from '@features/notifications/hooks/use-notifications';
+import { useNotifications } from '@hooks/use-notifications';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@utils/cn';
 import { LocalStorage } from '@utils/local-storage';
@@ -14,7 +14,7 @@ function RouteComponent() {
     const { id } = Route.useParams();
     const { addNotification } = useNotifications();
 
-    const savedUserId = LocalStorage.getData('userId');
+    const savedUserId = LocalStorage.getData('app_deviceId');
 
     const { room } = useRoom(id, {
         onUserJoined: (username) => {

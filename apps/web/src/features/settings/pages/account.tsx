@@ -1,7 +1,7 @@
 import AccountForm from '@components/account-form';
 import Button from '@components/button';
 import SecondaryPageLayout from '@components/page-layout/secondary-page-layout';
-import { useNotifications } from '@features/notifications/hooks/use-notifications';
+import { useNotifications } from '@hooks/use-notifications';
 import { useAudioController } from '@hooks/use-audio-controller';
 import { Link } from '@tanstack/react-router';
 import { ArrowLeftIcon } from 'lucide-react';

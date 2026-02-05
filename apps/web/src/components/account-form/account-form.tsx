@@ -6,11 +6,11 @@ import FormField from '@components/form/form-field';
 import FormLabel from '@components/form/form-label';
 import Button from '@components/button';
 import { useForm } from '@tanstack/react-form';
-import { accountFormSchema, type AccountFormOutput } from '@forms/account-form';
 import { usePlayerAccount } from '@hooks/use-player-account';
 import Section from '@components/section';
+import { accountFormSchema, type AccountFormOutput } from './account-form-schema';
 
-type AccountFormProps = Omit<ComponentProps<'form'>, 'onSubmit'> & {
+type AccountFormProps = Pick<ComponentProps<'form'>, 'className'> & {
     onSubmit?: (value: AccountFormOutput) => void | Promise<void>;
 };
 
@@ -27,13 +27,12 @@ function AccountForm({ onSubmit, ...props }: AccountFormProps) {
         onSubmit: async ({ value }) => {
             playerAccount.setUsername(value.username);
             await onSubmit?.(value);
-            form.reset();
+            form.reset(value);
         },
     });
 
     return (
         <form
-            {...props}
             onSubmit={(e) => {
                 e.preventDefault();
                 e.stopPropagation();

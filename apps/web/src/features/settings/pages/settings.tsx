@@ -12,15 +12,8 @@ function SettingsPage() {
     const playerAccount = usePlayerAccount();
     const navigate = useNavigate();
 
+    // TODO: Add confirmation popup, "window.confirm" is somehow blocked on mobile
     const handleOnClearStoredDataClick = () => {
-        const result = confirm(
-            'Are you sure you want to clear all stored data? This action cannot be undone.',
-        );
-
-        if (!result) {
-            return;
-        }
-
         LocalStorage.clearData();
         navigate({ to: '/' });
     };

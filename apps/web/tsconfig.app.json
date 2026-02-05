@@ -29,7 +29,6 @@
         "paths": {
             "@components/*": ["./src/components/*"],
             "@config/*": ["./src/config/*"],
-            "@forms/*": ["./src/forms/*"],
             "@features/*": ["./src/features/*"],
             "@hooks/*": ["./src/hooks/*"],
             "@utils/*": ["./src/utils/*"]

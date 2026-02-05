@@ -1,5 +1,5 @@
 import DefaultPageLayout from '@components/page-layout/default-page-layout';
-import AccountForm from '@components/account-form';
+import AccountForm from '@components/account-form/account-form';
 import { useNavigate } from '@tanstack/react-router';
 
 function CreateAccountPage() {

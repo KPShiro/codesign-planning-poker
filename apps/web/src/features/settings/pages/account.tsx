@@ -1,4 +1,4 @@
-import AccountForm from '@components/account-form';
+import AccountForm from '@components/account-form/account-form';
 import Button from '@components/button';
 import SecondaryPageLayout from '@components/page-layout/secondary-page-layout';
 import { useNotifications } from '@hooks/use-notifications';

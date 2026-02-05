@@ -19,7 +19,7 @@ const SectionButton = ({ label, value, className, ...props }: SectionButtonProps
                 className,
             )}
         >
-            <div className="text-base">{label}</div>
+            <div className="flex-1 text-left text-base">{label}</div>
             <div className="text-text-1 flex items-center gap-4">
                 {value ? <div className="text-sm font-medium">{value}</div> : null}
                 <ChevronRightIcon size={20} />

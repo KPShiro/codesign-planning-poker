@@ -6,11 +6,14 @@
         --codesign-color-secondary: var(--color-emerald-700);
         --codesign-color-on-secondary: var(--color-emerald-50);
 
-        --codesign-color-danger: var(--color-red-400);
+        --codesign-color-danger: var(--color-red-700);
         --codesign-color-on-danger: var(--color-red-100);
 
-        --codesign-color-success: var(--color-green-700);
-        --codesign-color-on-success: var(--color-green-50);
+        --codesign-color-warning: var(--color-yellow-600);
+        --codesign-color-on-warning: var(--color-yellow-100);
+
+        --codesign-color-success: var(--color-green-600);
+        --codesign-color-on-success: var(--color-green-100);
 
         --codesign-color-surface-0: var(--color-zinc-900);
         --codesign-color-on-surface-0: var(--color-zinc-100);

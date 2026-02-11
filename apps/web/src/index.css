@@ -13,6 +13,9 @@
     --color-danger: var(--codesign-color-danger);
     --color-on-danger: var(--codesign-color-on-danger);
 
+    --color-warning: var(--codesign-color-warning);
+    --color-on-warning: var(--codesign-color-on-warning);
+
     --color-success: var(--codesign-color-success);
     --color-on-success: var(--codesign-color-on-success);
 

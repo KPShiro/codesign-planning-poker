@@ -11,7 +11,7 @@ type NotificationsContextType = {
     addNotification: (
         message: Notification['message'],
         duration?: Notification['duration'],
-    ) => void;
+    ) => Notification['id'];
     removeNotification: (id: Notification['id']) => void;
 };
 

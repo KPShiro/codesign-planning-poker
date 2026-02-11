@@ -13,11 +13,10 @@ import { Route as CreateAccountRouteImport } from './routes/create-account'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
-import { Route as AuthenticatedSettingsSfxRouteImport } from './routes/_authenticated/settings/sfx'
-import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
-import { Route as AuthenticatedSettingsMusicRouteImport } from './routes/_authenticated/settings/music'
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
 import { Route as AuthenticatedGameplayIdRouteImport } from './routes/_authenticated/gameplay.$id'
+import { Route as AuthenticatedSettingsAudioAudioTrackIdIndexRouteImport } from './routes/_authenticated/settings/audio/$audioTrackId.index'
+import { Route as AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRouteImport } from './routes/_authenticated/settings/audio/$audioTrackId.$audioEventId'
 
 const CreateAccountRoute = CreateAccountRouteImport.update({
   id: '/create-account',
@@ -39,24 +38,6 @@ const AuthenticatedSettingsIndexRoute =
     path: '/settings/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-const AuthenticatedSettingsSfxRoute =
-  AuthenticatedSettingsSfxRouteImport.update({
-    id: '/settings/sfx',
-    path: '/settings/sfx',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedSettingsNotificationsRoute =
-  AuthenticatedSettingsNotificationsRouteImport.update({
-    id: '/settings/notifications',
-    path: '/settings/notifications',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedSettingsMusicRoute =
-  AuthenticatedSettingsMusicRouteImport.update({
-    id: '/settings/music',
-    path: '/settings/music',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
 const AuthenticatedSettingsAccountRoute =
   AuthenticatedSettingsAccountRouteImport.update({
     id: '/settings/account',
@@ -68,26 +49,36 @@ const AuthenticatedGameplayIdRoute = AuthenticatedGameplayIdRouteImport.update({
   path: '/gameplay/$id',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedSettingsAudioAudioTrackIdIndexRoute =
+  AuthenticatedSettingsAudioAudioTrackIdIndexRouteImport.update({
+    id: '/settings/audio/$audioTrackId/',
+    path: '/settings/audio/$audioTrackId/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute =
+  AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRouteImport.update({
+    id: '/settings/audio/$audioTrackId/$audioEventId',
+    path: '/settings/audio/$audioTrackId/$audioEventId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/create-account': typeof CreateAccountRoute
   '/': typeof AuthenticatedIndexRoute
   '/gameplay/$id': typeof AuthenticatedGameplayIdRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
-  '/settings/music': typeof AuthenticatedSettingsMusicRoute
-  '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
-  '/settings/sfx': typeof AuthenticatedSettingsSfxRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
+  '/settings/audio/$audioTrackId/$audioEventId': typeof AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute
+  '/settings/audio/$audioTrackId': typeof AuthenticatedSettingsAudioAudioTrackIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/create-account': typeof CreateAccountRoute
   '/': typeof AuthenticatedIndexRoute
   '/gameplay/$id': typeof AuthenticatedGameplayIdRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
-  '/settings/music': typeof AuthenticatedSettingsMusicRoute
-  '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
-  '/settings/sfx': typeof AuthenticatedSettingsSfxRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
+  '/settings/audio/$audioTrackId/$audioEventId': typeof AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute
+  '/settings/audio/$audioTrackId': typeof AuthenticatedSettingsAudioAudioTrackIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -96,10 +87,9 @@ export interface FileRoutesById {
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/gameplay/$id': typeof AuthenticatedGameplayIdRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
-  '/_authenticated/settings/music': typeof AuthenticatedSettingsMusicRoute
-  '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
-  '/_authenticated/settings/sfx': typeof AuthenticatedSettingsSfxRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
+  '/_authenticated/settings/audio/$audioTrackId/$audioEventId': typeof AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute
+  '/_authenticated/settings/audio/$audioTrackId/': typeof AuthenticatedSettingsAudioAudioTrackIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -108,20 +98,18 @@ export interface FileRouteTypes {
     | '/'
     | '/gameplay/$id'
     | '/settings/account'
-    | '/settings/music'
-    | '/settings/notifications'
-    | '/settings/sfx'
     | '/settings'
+    | '/settings/audio/$audioTrackId/$audioEventId'
+    | '/settings/audio/$audioTrackId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/create-account'
     | '/'
     | '/gameplay/$id'
     | '/settings/account'
-    | '/settings/music'
-    | '/settings/notifications'
-    | '/settings/sfx'
     | '/settings'
+    | '/settings/audio/$audioTrackId/$audioEventId'
+    | '/settings/audio/$audioTrackId'
   id:
     | '__root__'
     | '/_authenticated'
@@ -129,10 +117,9 @@ export interface FileRouteTypes {
     | '/_authenticated/'
     | '/_authenticated/gameplay/$id'
     | '/_authenticated/settings/account'
-    | '/_authenticated/settings/music'
-    | '/_authenticated/settings/notifications'
-    | '/_authenticated/settings/sfx'
     | '/_authenticated/settings/'
+    | '/_authenticated/settings/audio/$audioTrackId/$audioEventId'
+    | '/_authenticated/settings/audio/$audioTrackId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -170,27 +157,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/settings/sfx': {
-      id: '/_authenticated/settings/sfx'
-      path: '/settings/sfx'
-      fullPath: '/settings/sfx'
-      preLoaderRoute: typeof AuthenticatedSettingsSfxRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/settings/notifications': {
-      id: '/_authenticated/settings/notifications'
-      path: '/settings/notifications'
-      fullPath: '/settings/notifications'
-      preLoaderRoute: typeof AuthenticatedSettingsNotificationsRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/settings/music': {
-      id: '/_authenticated/settings/music'
-      path: '/settings/music'
-      fullPath: '/settings/music'
-      preLoaderRoute: typeof AuthenticatedSettingsMusicRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/_authenticated/settings/account': {
       id: '/_authenticated/settings/account'
       path: '/settings/account'
@@ -205,6 +171,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedGameplayIdRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/settings/audio/$audioTrackId/': {
+      id: '/_authenticated/settings/audio/$audioTrackId/'
+      path: '/settings/audio/$audioTrackId'
+      fullPath: '/settings/audio/$audioTrackId'
+      preLoaderRoute: typeof AuthenticatedSettingsAudioAudioTrackIdIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings/audio/$audioTrackId/$audioEventId': {
+      id: '/_authenticated/settings/audio/$audioTrackId/$audioEventId'
+      path: '/settings/audio/$audioTrackId/$audioEventId'
+      fullPath: '/settings/audio/$audioTrackId/$audioEventId'
+      preLoaderRoute: typeof AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
@@ -212,21 +192,20 @@ interface AuthenticatedRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedGameplayIdRoute: typeof AuthenticatedGameplayIdRoute
   AuthenticatedSettingsAccountRoute: typeof AuthenticatedSettingsAccountRoute
-  AuthenticatedSettingsMusicRoute: typeof AuthenticatedSettingsMusicRoute
-  AuthenticatedSettingsNotificationsRoute: typeof AuthenticatedSettingsNotificationsRoute
-  AuthenticatedSettingsSfxRoute: typeof AuthenticatedSettingsSfxRoute
   AuthenticatedSettingsIndexRoute: typeof AuthenticatedSettingsIndexRoute
+  AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute: typeof AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute
+  AuthenticatedSettingsAudioAudioTrackIdIndexRoute: typeof AuthenticatedSettingsAudioAudioTrackIdIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedGameplayIdRoute: AuthenticatedGameplayIdRoute,
   AuthenticatedSettingsAccountRoute: AuthenticatedSettingsAccountRoute,
-  AuthenticatedSettingsMusicRoute: AuthenticatedSettingsMusicRoute,
-  AuthenticatedSettingsNotificationsRoute:
-    AuthenticatedSettingsNotificationsRoute,
-  AuthenticatedSettingsSfxRoute: AuthenticatedSettingsSfxRoute,
   AuthenticatedSettingsIndexRoute: AuthenticatedSettingsIndexRoute,
+  AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute:
+    AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute,
+  AuthenticatedSettingsAudioAudioTrackIdIndexRoute:
+    AuthenticatedSettingsAudioAudioTrackIdIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

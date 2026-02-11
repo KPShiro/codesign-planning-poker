@@ -1,12 +1,24 @@
-import { AUDIO_CONFIG, type AudioFileId, type AudioTrackId } from '@config/audio-config';
+import {
+    AUDIO_CONFIG,
+    type AudioFileId,
+    type AudioFileMap,
+    type AudioTrackId,
+} from '@config/audio-config';
+import { STORAGE_KEYS } from '@config/storage';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 type AudioStoreState = {
     volumes: { [K in AudioTrackId]: number };
-    selectedFiles: Record<AudioTrackId, string>;
+    selectedFiles: {
+        [K in AudioTrackId]: AudioFileMap<K>;
+    };
     setVolume: (trackId: AudioTrackId, volume: number) => void;
-    setSelectedFile: <T extends AudioTrackId>(trackId: T, fileId: AudioFileId<T>) => void;
+    setSelectedFile: <T extends AudioTrackId>(
+        trackId: T,
+        mappingKey: keyof AudioFileMap<T>,
+        fileId: AudioFileId<T>,
+    ) => void;
 };
 
 export const useAudioStore = create<AudioStoreState>()(
@@ -18,19 +30,25 @@ export const useAudioStore = create<AudioStoreState>()(
                 notifications: AUDIO_CONFIG.notifications.defaultVolume,
             },
             selectedFiles: {
-                sfx: AUDIO_CONFIG.sfx.files[0].id,
-                music: AUDIO_CONFIG.music.files[0].id,
-                notifications: AUDIO_CONFIG.notifications.files[0].id,
+                sfx: AUDIO_CONFIG.sfx.mapping,
+                music: AUDIO_CONFIG.music.mapping,
+                notifications: AUDIO_CONFIG.notifications.mapping,
             },
             setVolume: (trackId, volume) =>
                 set((state) => ({
                     volumes: { ...state.volumes, [trackId]: volume },
                 })),
-            setSelectedFile: (trackId, fileId) =>
+            setSelectedFile: (trackId, mappingKey, fileId) =>
                 set((state) => ({
-                    selectedFiles: { ...state.selectedFiles, [trackId]: fileId },
+                    selectedFiles: {
+                        ...state.selectedFiles,
+                        [trackId]: {
+                            ...state.selectedFiles[trackId],
+                            [mappingKey]: fileId,
+                        },
+                    },
                 })),
         }),
-        { name: 'audio-storage' },
+        { name: STORAGE_KEYS['AUDIO_SETTINGS'] },
     ),
 );

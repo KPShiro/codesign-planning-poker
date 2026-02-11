@@ -15,6 +15,9 @@ export const AUDIO_CONFIG = {
                 src: '/audio/music/time_by_avanti.mp3',
             },
         ],
+        mapping: {
+            ingame: 'time_by_avanti',
+        },
     },
     sfx: {
         defaultVolume: 0.7,
@@ -32,6 +35,10 @@ export const AUDIO_CONFIG = {
                 src: '/audio/sfx/level_up_by_universfield.mp3',
             },
         ],
+        mapping: {
+            success: 'level_up_by_universfield',
+            click: 'simple_click',
+        },
     },
     notifications: {
         defaultVolume: 1.0,
@@ -49,10 +56,19 @@ export const AUDIO_CONFIG = {
                 src: '/audio/notifications/gentle_marimba.mp3',
             },
         ],
+        mapping: {
+            ping: 'high_blip',
+        },
     },
 } as const;
 
 export type AudioConfig = typeof AUDIO_CONFIG;
 export type AudioTrackId = keyof AudioConfig;
+
 export type AudioFileId<T extends AudioTrackId> = AudioConfig[T]['files'][number]['id'];
 export type AudioFile<T extends AudioTrackId> = AudioConfig[T]['files'][number];
+
+export type AudioFileMapKey<T extends AudioTrackId> = keyof AudioConfig[T]['mapping'];
+export type AudioFileMap<T extends AudioTrackId> = {
+    readonly [K in AudioFileMapKey<T>]: AudioFileId<T>;
+};

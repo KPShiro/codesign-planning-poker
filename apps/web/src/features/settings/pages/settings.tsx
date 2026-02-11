@@ -1,14 +1,12 @@
 import Button from '@components/button';
 import SecondaryPageLayout from '@components/page-layout/secondary-page-layout';
 import Section from '@components/section';
-import { useAudioController } from '@hooks/use-audio-controller';
 import { usePlayerAccount } from '@hooks/use-player-account';
 import { useNavigate } from '@tanstack/react-router';
 import { LocalStorage } from '@utils/local-storage';
 import { ArrowLeftIcon } from 'lucide-react';
 
 function SettingsPage() {
-    const audioController = useAudioController();
     const playerAccount = usePlayerAccount();
     const navigate = useNavigate();
 
@@ -40,18 +38,30 @@ function SettingsPage() {
             <Section title="Sounds & Haptics">
                 <Section.Button
                     label="Music"
-                    value={audioController.getSelectedAudioFile('music')?.label}
-                    onClick={() => navigate({ to: '/settings/music' })}
+                    onClick={() =>
+                        navigate({
+                            to: '/settings/audio/$audioTrackId',
+                            params: { audioTrackId: 'music' },
+                        })
+                    }
                 />
                 <Section.Button
                     label="SFX"
-                    value={audioController.getSelectedAudioFile('sfx')?.label}
-                    onClick={() => navigate({ to: '/settings/sfx' })}
+                    onClick={() =>
+                        navigate({
+                            to: '/settings/audio/$audioTrackId',
+                            params: { audioTrackId: 'sfx' },
+                        })
+                    }
                 />
                 <Section.Button
                     label="Notifications"
-                    value={audioController.getSelectedAudioFile('notifications')?.label}
-                    onClick={() => navigate({ to: '/settings/notifications' })}
+                    onClick={() =>
+                        navigate({
+                            to: '/settings/audio/$audioTrackId',
+                            params: { audioTrackId: 'notifications' },
+                        })
+                    }
                 />
             </Section>
             <Section title="Daneger Zone">

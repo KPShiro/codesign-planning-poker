@@ -1,49 +1,73 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type UseCountdownProps = {
     seconds: number;
     onStart?: () => void;
     onStop?: () => void;
+    onTick?: (secondsLeft: number) => void;
 };
 
-export function useCountdown(props: UseCountdownProps) {
-    const [secondsLeft, setSecondsLeft] = useState<number>(props.seconds);
+export function useCountdown({ seconds, onStart, onStop, onTick }: UseCountdownProps) {
+    const [secondsLeft, setSecondsLeft] = useState<number>(seconds);
 
     const [isRunning, setIsRunning] = useState<boolean>(false);
 
-    const interval = useRef<number | null>(null);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const onStartRef = useRef(onStart);
+    const onStopRef = useRef(onStop);
+    const onTickRef = useRef(onTick);
+    const secondsRef = useRef(seconds);
+
+    useEffect(() => {
+        onStartRef.current = onStart;
+        onStopRef.current = onStop;
+        onTickRef.current = onTick;
+        secondsRef.current = seconds;
+    }, [onStart, onStop, onTick, seconds]);
+
+    useEffect(() => {
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
+        };
+    }, []);
 
     const stopCountdown = useCallback(() => {
-        if (interval.current) {
-            clearInterval(interval.current);
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
         }
 
-        setSecondsLeft(props.seconds);
+        setSecondsLeft(secondsRef.current);
         setIsRunning(false);
-        props.onStop?.();
-    }, [props]);
+        onStopRef.current?.();
+    }, []);
 
     const startCountdown = useCallback(() => {
-        if (isRunning) {
+        if (intervalRef.current) {
             stopCountdown();
         }
 
+        const currentSeconds = secondsRef.current;
         const now = Date.now();
-        const endDate = now + props.seconds * 1_000;
+        const endDate = now + currentSeconds * 1_000;
 
-        props.onStart?.();
+        onStartRef.current?.();
         setIsRunning(true);
+        setSecondsLeft(currentSeconds);
 
-        interval.current = setInterval(() => {
-            const secondsLeft = Math.ceil(Math.max(0, endDate - Date.now()) / 1_000);
+        intervalRef.current = setInterval(() => {
+            const timeLeft = Math.ceil(Math.max(0, endDate - Date.now()) / 1_000);
 
-            if (secondsLeft > 0) {
-                setSecondsLeft(secondsLeft);
+            if (timeLeft > 0) {
+                onTickRef.current?.(timeLeft);
+                setSecondsLeft(timeLeft);
             } else {
                 stopCountdown();
             }
         }, 1_000);
-    }, [isRunning, props, stopCountdown]);
+    }, [stopCountdown]);
 
     return {
         isRunning,

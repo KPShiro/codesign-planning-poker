@@ -12,13 +12,17 @@ export function NotificationsProvider({ children }: PropsWithChildren) {
 
     const addNotification = useCallback(
         (message: Notification['message'], duration: Notification['duration'] = 3_000) => {
+            const id = generateUUID();
+
             const newNotification: Notification = {
-                id: generateUUID(),
+                id: id,
                 message,
                 duration,
             };
 
             setNotifications((prev) => [...prev, newNotification]);
+
+            return id;
         },
         [],
     );

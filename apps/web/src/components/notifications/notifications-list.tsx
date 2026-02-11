@@ -7,7 +7,7 @@ const NotificationsList = () => {
     if (notifications.length === 0) return null;
 
     return (
-        <div className="fixed top-4 right-4 left-4 z-(--z-notifications) flex flex-col gap-2 md:left-auto">
+        <div className="fixed right-4 bottom-4 left-4 z-(--z-notifications) flex flex-col gap-2 md:top-4 md:left-auto">
             {notifications.map((notification) => (
                 <NotificationsListItem key={notification.id} notification={notification} />
             ))}

@@ -24,13 +24,13 @@ const NotificationsListItem = ({ notification }: NotificationsListItemProps) => 
     return (
         <div
             className={cn(
-                'bg-surface-1 text-on-surface-1 relative isolate rounded-md border border-current/15 p-4',
-                'animate-slide-in',
+                'bg-surface-1 text-on-surface-1 relative isolate rounded-md border border-current/15 px-6 py-3',
+                'animate-slide-in overflow-clip',
             )}
         >
             <span className="text-sm font-medium">{notification.message}</span>
             {notification.duration ? (
-                <div className="absolute top-0 right-0 left-0 h-1">
+                <div className="absolute top-0 right-0 left-0 h-1 bg-current/15">
                     <div
                         className="bg-primary animate-timer-progress h-full w-0"
                         style={{

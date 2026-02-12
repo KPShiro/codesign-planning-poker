@@ -9,7 +9,10 @@ function AccountSettingsPage() {
     const notifications = useNotifications();
 
     const handleOnSubmit = () => {
-        notifications.addNotification('Account information updated');
+        notifications.addNotification({
+            type: 'info',
+            message: 'Account information updated',
+        });
     };
 
     return (

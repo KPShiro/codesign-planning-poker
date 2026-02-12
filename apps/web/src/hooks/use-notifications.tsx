@@ -1,17 +1,17 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, type ReactNode } from 'react';
 
 export type Notification = {
     id: string;
-    message: string;
+    type: 'info' | 'danger' | 'warning' | 'success';
+    message: ReactNode;
     duration?: number;
 };
 
+export type NotificationConfig = Omit<Notification, 'id'>;
+
 type NotificationsContextType = {
     notifications: Notification[];
-    addNotification: (
-        message: Notification['message'],
-        duration?: Notification['duration'],
-    ) => Notification['id'];
+    addNotification: (config: NotificationConfig) => Notification['id'];
     removeNotification: (id: Notification['id']) => void;
 };
 

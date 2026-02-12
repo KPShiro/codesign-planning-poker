@@ -1,4 +1,8 @@
-import { type Notification, NotificationsContext } from '@hooks/use-notifications';
+import {
+    type Notification,
+    type NotificationConfig,
+    NotificationsContext,
+} from '@hooks/use-notifications';
 import NotificationsList from './notifications-list';
 import { generateUUID } from '@utils/generate-uuid';
 import { useCallback, useMemo, useState, type PropsWithChildren } from 'react';
@@ -10,22 +14,19 @@ export function NotificationsProvider({ children }: PropsWithChildren) {
         setNotifications((prev) => prev.filter((n) => n.id !== id));
     }, []);
 
-    const addNotification = useCallback(
-        (message: Notification['message'], duration: Notification['duration'] = 3_000) => {
-            const id = generateUUID();
+    const addNotification = useCallback((config: NotificationConfig) => {
+        const id = generateUUID();
 
-            const newNotification: Notification = {
-                id: id,
-                message,
-                duration,
-            };
+        const newNotification: Notification = {
+            id: id,
+            ...config,
+            duration: config.duration ?? 3_000,
+        };
 
-            setNotifications((prev) => [...prev, newNotification]);
+        setNotifications((prev) => [...prev, newNotification]);
 
-            return id;
-        },
-        [],
-    );
+        return id;
+    }, []);
 
     const value = useMemo(
         () => ({

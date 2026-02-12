@@ -18,10 +18,24 @@ function RouteComponent() {
 
     const { room } = useRoom(id, {
         onUserJoined: (username) => {
-            addNotification(`${username} joined the room`);
+            addNotification({
+                type: 'info',
+                message: (
+                    <>
+                        <b>{username}</b> joined the room
+                    </>
+                ),
+            });
         },
         onUserLeft: (username) => {
-            addNotification(`${username} left the room`);
+            addNotification({
+                type: 'info',
+                message: (
+                    <>
+                        <b>{username}</b> left the room
+                    </>
+                ),
+            });
         },
     });
 

@@ -29,14 +29,15 @@ export const initSocket = (httpServer: HttpServer, cors?: cors.CorsOptions) => {
     io = new Server(httpServer, { cors });
 
     io.use((socket, next) => {
-        const { userId, userName } = socket.handshake.auth;
+        const { deviceId, username } = socket.handshake.auth;
 
-        if (!userId || !userName) {
+        if (!deviceId || !username) {
             return next(new Error('User data is missing!'));
         }
 
-        socket.data.userId = userId;
-        socket.data.userName = userName;
+        socket.data.deviceId = deviceId;
+        socket.data.username = username;
+        socket.join(deviceId);
 
         next();
     });

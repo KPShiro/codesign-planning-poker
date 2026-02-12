@@ -1,3 +1,4 @@
+import type { User } from '@codesign-planning-poker/shared';
 import DefaultPageLayout from '@components/page-layout/default-page-layout';
 import { useRoom } from '@features/games-list/hooks/use-room';
 import { useNotifications } from '@hooks/use-notifications';
@@ -12,13 +13,14 @@ export const Route = createFileRoute('/_authenticated/gameplay/$id')({
 // eslint-disable-next-line react-refresh/only-export-components
 function RouteComponent() {
     const { id } = Route.useParams();
-    const { addNotification } = useNotifications();
 
-    const savedUserId = LocalStorage.getData('app_deviceId');
+    const notifications = useNotifications();
 
-    const { room } = useRoom(id, {
+    const deviceId = LocalStorage.getData('app_deviceId');
+
+    const { room, pingUser } = useRoom(id, {
         onUserJoined: (username) => {
-            addNotification({
+            notifications.addNotification({
                 type: 'info',
                 message: (
                     <>
@@ -28,7 +30,7 @@ function RouteComponent() {
             });
         },
         onUserLeft: (username) => {
-            addNotification({
+            notifications.addNotification({
                 type: 'info',
                 message: (
                     <>
@@ -39,8 +41,10 @@ function RouteComponent() {
         },
     });
 
-    const handlePingUser = () => {
-        // TODO: Implement ping user functionality
+    const handlePingUser = (userId: User['id']) => {
+        if (userId !== deviceId) {
+            pingUser(userId);
+        }
     };
 
     if (!room) {
@@ -49,25 +53,20 @@ function RouteComponent() {
 
     return (
         <DefaultPageLayout>
-            <div>{room.name}</div>
+            <h1>{room.name}</h1>
             <ul className="flex flex-col gap-2">
                 {room.users.map((user) => (
                     <li
                         key={user.id}
                         className={cn(
-                            'flex items-center gap-3 border border-current/15 p-4 pr-5 hover:bg-current/5',
+                            'flex items-center gap-3 border border-current/15 p-4 pr-5 select-none',
+                            'active:bg-current/10',
+                            'hover:bg-current/5',
                             'cursor-pointer rounded-md select-none',
                         )}
-                        onClick={handlePingUser}
+                        onClick={() => handlePingUser(user.id)}
                     >
-                        <span
-                            className={cn(
-                                'font-medium',
-                                user.id === savedUserId ? 'text-primary' : '',
-                            )}
-                        >
-                            {user.name}
-                        </span>
+                        <span className="font-medium">{user.name}</span>
                     </li>
                 ))}
             </ul>

@@ -14,7 +14,7 @@ export function useRoomsList() {
             return undefined;
         }
 
-        const recentRoomId = LocalStorage.getData('recentRoomId');
+        const recentRoomId = LocalStorage.getData('app_recentRoomId');
         return rooms.find((room) => room.id === recentRoomId);
     }, [rooms]);
 

@@ -11,7 +11,9 @@ type SectionProps = Pick<ComponentProps<'div'>, 'children' | 'className'> & {
 const Section = (props: SectionProps) => {
     return (
         <div className={cn('flex flex-col gap-3 select-none')}>
-            {props.title ? <div className="text-text-1 px-4 font-bold">{props.title}</div> : null}
+            {props.title ? (
+                <div className="px-4 font-bold text-current/60">{props.title}</div>
+            ) : null}
             <div
                 className={cn(
                     'divide-y divide-current/15 overflow-clip rounded-md bg-current/5',
@@ -21,7 +23,7 @@ const Section = (props: SectionProps) => {
                 {props.children}
             </div>
             {props.description ? (
-                <div className="text-text-1 px-4 text-sm">{props.description}</div>
+                <div className="px-4 text-sm text-current/60">{props.description}</div>
             ) : null}
         </div>
     );

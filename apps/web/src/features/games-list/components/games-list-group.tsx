@@ -8,7 +8,7 @@ type GamesListGroupProps = ComponentProps<'div'> & {
 function GamesListGroup({ label, className, children, ...props }: GamesListGroupProps) {
     return (
         <div {...props} className={cn('flex flex-col gap-2', className)}>
-            <h6 className="text-text-1">{label}</h6>
+            <h6 className="text-current/60">{label}</h6>
             {children}
         </div>
     );

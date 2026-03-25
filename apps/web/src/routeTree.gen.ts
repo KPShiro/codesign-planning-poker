@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as CreateAccountRouteImport } from './routes/create-account'
+import { Route as ColorsRouteImport } from './routes/colors'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
@@ -21,6 +22,11 @@ import { Route as AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRouteImport 
 const CreateAccountRoute = CreateAccountRouteImport.update({
   id: '/create-account',
   path: '/create-account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ColorsRoute = ColorsRouteImport.update({
+  id: '/colors',
+  path: '/colors',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
@@ -63,6 +69,7 @@ const AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/colors': typeof ColorsRoute
   '/create-account': typeof CreateAccountRoute
   '/': typeof AuthenticatedIndexRoute
   '/gameplay/$id': typeof AuthenticatedGameplayIdRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/settings/audio/$audioTrackId': typeof AuthenticatedSettingsAudioAudioTrackIdIndexRoute
 }
 export interface FileRoutesByTo {
+  '/colors': typeof ColorsRoute
   '/create-account': typeof CreateAccountRoute
   '/': typeof AuthenticatedIndexRoute
   '/gameplay/$id': typeof AuthenticatedGameplayIdRoute
@@ -83,6 +91,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/colors': typeof ColorsRoute
   '/create-account': typeof CreateAccountRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/gameplay/$id': typeof AuthenticatedGameplayIdRoute
@@ -94,6 +103,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/colors'
     | '/create-account'
     | '/'
     | '/gameplay/$id'
@@ -103,6 +113,7 @@ export interface FileRouteTypes {
     | '/settings/audio/$audioTrackId'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/colors'
     | '/create-account'
     | '/'
     | '/gameplay/$id'
@@ -113,6 +124,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_authenticated'
+    | '/colors'
     | '/create-account'
     | '/_authenticated/'
     | '/_authenticated/gameplay/$id'
@@ -124,6 +136,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  ColorsRoute: typeof ColorsRoute
   CreateAccountRoute: typeof CreateAccountRoute
 }
 
@@ -134,6 +147,13 @@ declare module '@tanstack/react-router' {
       path: '/create-account'
       fullPath: '/create-account'
       preLoaderRoute: typeof CreateAccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/colors': {
+      id: '/colors'
+      path: '/colors'
+      fullPath: '/colors'
+      preLoaderRoute: typeof ColorsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -214,6 +234,7 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  ColorsRoute: ColorsRoute,
   CreateAccountRoute: CreateAccountRoute,
 }
 export const routeTree = rootRouteImport

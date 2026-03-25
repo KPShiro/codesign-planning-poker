@@ -5,7 +5,7 @@ type FormHintProps = ComponentProps<'div'>;
 
 function FormHint({ children, ...props }: FormHintProps) {
     return (
-        <div {...props} className={cn('text-text-1 text-sm', props.className)}>
+        <div {...props} className={cn('text-sm text-current/60', props.className)}>
             {children}
         </div>
     );

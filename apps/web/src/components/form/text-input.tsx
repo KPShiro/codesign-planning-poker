@@ -54,9 +54,10 @@ function TextInput({ onValueChange, ref, ...props }: TextInputProps) {
     return (
         <div
             className={cn(
-                'group flex h-12 w-full rounded border border-current/15 text-base',
-                'has-disabled:bg-current/5 has-disabled:opacity-25 has-disabled:select-none',
-                'has-enabled:hover:border-current/25',
+                'group flex h-12 w-full rounded border text-base',
+                'border-border bg-input-bg text-input-text',
+                'has-disabled:bg-input-bg/5 has-disabled:text-input-text/50 has-disabled:select-none',
+                // 'has-enabled:hover:border-current/25',
                 'focus-within:outline',
                 props.className,
             )}

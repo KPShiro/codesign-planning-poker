@@ -8,7 +8,7 @@ export type Room = {
     id: string;
     name: string;
     users: User[];
-    status: 'voting' | 'reveal';
+    status: 'pending' | 'voting' | 'cards_revealed';
 };
 
 // -----------------------------------------

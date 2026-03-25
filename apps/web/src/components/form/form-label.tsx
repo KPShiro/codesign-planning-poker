@@ -5,7 +5,7 @@ type FormLabelProps = ComponentProps<'label'>;
 
 function FormLabel({ children, ...props }: FormLabelProps) {
     return (
-        <label {...props} className={cn('text-text-1 text-xs font-bold', props.className)}>
+        <label {...props} className={cn('text-xs font-bold text-current/60', props.className)}>
             {children}
         </label>
     );

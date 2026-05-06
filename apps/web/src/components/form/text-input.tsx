@@ -1,12 +1,13 @@
-import { useId, useRef, type ChangeEvent, type ComponentProps } from 'react';
 import { cn } from '@utils/cn';
 import { XIcon } from 'lucide-react';
+import { useId, useRef, type ChangeEvent, type ComponentProps } from 'react';
 
 type TextInputProps = Omit<ComponentProps<'input'>, 'type'> & {
     onValueChange?: (value: string) => void;
+    allowSpaces?: boolean;
 };
 
-function TextInput({ onValueChange, ref, ...props }: TextInputProps) {
+export function TextInput({ onValueChange, ref, allowSpaces = true, ...props }: TextInputProps) {
     const generatedId = useId();
     const inputId = props.id || generatedId;
 
@@ -18,17 +19,20 @@ function TextInput({ onValueChange, ref, ...props }: TextInputProps) {
 
     const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         const originalValue = e.target.value;
-        const valueWithoutSpaces = originalValue.replace(/\s/g, '');
 
-        if (originalValue !== valueWithoutSpaces) {
-            // Remain cursor position after removing spaces
-            const cursorPosition = e.target.selectionStart;
+        if (!allowSpaces) {
+            const valueWithoutSpaces = originalValue.replace(/\s/g, '');
 
-            e.target.value = valueWithoutSpaces;
+            if (originalValue !== valueWithoutSpaces) {
+                // Remain cursor position after removing spaces
+                const cursorPosition = e.target.selectionStart;
 
-            // Set cursor position back
-            if (cursorPosition && e.target.type === 'text') {
-                e.target.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+                e.target.value = valueWithoutSpaces;
+
+                // Set cursor position back
+                if (cursorPosition && e.target.type === 'text') {
+                    e.target.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+                }
             }
         }
 
@@ -54,11 +58,10 @@ function TextInput({ onValueChange, ref, ...props }: TextInputProps) {
     return (
         <div
             className={cn(
-                'group flex h-12 w-full rounded border text-base',
-                'border-border bg-input-bg text-input-text',
-                'has-disabled:bg-input-bg/5 has-disabled:text-input-text/50 has-disabled:select-none',
-                // 'has-enabled:hover:border-current/25',
-                'focus-within:outline',
+                'group flex h-12 w-full rounded border-2 text-base',
+                'not-has-disabled:bg-surface-0 border-current/15',
+                'has-disabled:opacity-disabled has-disabled:select-none',
+                'focus-within:border-current',
                 props.className,
             )}
         >
@@ -90,5 +93,3 @@ function TextInput({ onValueChange, ref, ...props }: TextInputProps) {
         </div>
     );
 }
-
-export default TextInput;

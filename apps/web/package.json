@@ -18,7 +18,7 @@
         "@tanstack/react-router": "^1.147.3",
         "@tanstack/react-router-devtools": "^1.149.0",
         "clsx": "^2.1.1",
-        "lucide-react": "^0.562.0",
+        "lucide-react": "1.8.0",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
         "socket.io-client": "^4.8.1",

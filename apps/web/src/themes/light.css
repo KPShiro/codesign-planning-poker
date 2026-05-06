@@ -1,11 +1,8 @@
 :root {
-    --codesign-color-primary: var(--color-blue-600);
+    --codesign-color-primary: var(--color-violet-500);
     --codesign-color-on-primary: var(--color-white);
 
-    --codesign-color-secondary: var(--color-sky-200);
-    --codesign-color-on-secondary: var(--color-sky-900);
-
-    --codesign-color-danger: var(--color-rose-600);
+    --codesign-color-danger: var(--color-rose-800);
     --codesign-color-on-danger: var(--color-rose-50);
 
     --codesign-color-warning: var(--color-amber-400);
@@ -15,16 +12,11 @@
     --codesign-color-on-success: var(--color-green-50);
 
     --codesign-color-surface-0: var(--color-white);
-    --codesign-color-on-surface-0: var(--color-zinc-950);
+    --codesign-color-on-surface-0: var(--color-slate-950);
 
-    --codesign-color-surface-1: var(--color-zinc-50);
-    --codesign-color-on-surface-1: var(--color-zinc-900);
+    --codesign-color-surface-1: var(--color-slate-100);
+    --codesign-color-on-surface-1: var(--color-slate-900);
 
-    --codesign-color-surface-2: var(--color-zinc-100);
-    --codesign-color-on-surface-2: var(--color-zinc-800);
-
-    --codesign-color-border: var(--color-zinc-300);
-
-    --codesign-color-input-bg: var(--codesign-color-surface-0);
-    --codesign-color-input-text: var(--codesign-color-on-surface-0);
+    --codesign-color-surface-2: var(--color-slate-200);
+    --codesign-color-on-surface-2: var(--color-slate-800);
 }

@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import type { ServerToClientEvents } from '@codesign-planning-poker/shared';
+import { useEffect } from 'react';
 import { socket } from 'src/socket';
 
 export function useSocketListener<K extends keyof ServerToClientEvents>(

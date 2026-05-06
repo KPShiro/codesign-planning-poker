@@ -9,19 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as CreateAccountRouteImport } from './routes/create-account'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as GameplayRouteImport } from './routes/gameplay'
 import { Route as ColorsRouteImport } from './routes/colors'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
-import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
-import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
-import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
-import { Route as AuthenticatedGameplayIdRouteImport } from './routes/_authenticated/gameplay.$id'
-import { Route as AuthenticatedSettingsAudioAudioTrackIdIndexRouteImport } from './routes/_authenticated/settings/audio/$audioTrackId.index'
-import { Route as AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRouteImport } from './routes/_authenticated/settings/audio/$audioTrackId.$audioEventId'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as SettingsIndexRouteImport } from './routes/settings.index'
+import { Route as SettingsAccountRouteImport } from './routes/settings.account'
+import { Route as GameplayIdRouteImport } from './routes/gameplay.$id'
+import { Route as AccountCreateRouteImport } from './routes/account.create'
 
-const CreateAccountRoute = CreateAccountRouteImport.update({
-  id: '/create-account',
-  path: '/create-account',
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GameplayRoute = GameplayRouteImport.update({
+  id: '/gameplay',
+  path: '/gameplay',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ColorsRoute = ColorsRouteImport.update({
@@ -29,124 +33,116 @@ const ColorsRoute = ColorsRouteImport.update({
   path: '/colors',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRoute = AuthenticatedRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedSettingsIndexRoute =
-  AuthenticatedSettingsIndexRouteImport.update({
-    id: '/settings/',
-    path: '/settings/',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedSettingsAccountRoute =
-  AuthenticatedSettingsAccountRouteImport.update({
-    id: '/settings/account',
-    path: '/settings/account',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedGameplayIdRoute = AuthenticatedGameplayIdRouteImport.update({
-  id: '/gameplay/$id',
-  path: '/gameplay/$id',
-  getParentRoute: () => AuthenticatedRoute,
+const SettingsIndexRoute = SettingsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SettingsRoute,
 } as any)
-const AuthenticatedSettingsAudioAudioTrackIdIndexRoute =
-  AuthenticatedSettingsAudioAudioTrackIdIndexRouteImport.update({
-    id: '/settings/audio/$audioTrackId/',
-    path: '/settings/audio/$audioTrackId/',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute =
-  AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRouteImport.update({
-    id: '/settings/audio/$audioTrackId/$audioEventId',
-    path: '/settings/audio/$audioTrackId/$audioEventId',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
+const SettingsAccountRoute = SettingsAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => SettingsRoute,
+} as any)
+const GameplayIdRoute = GameplayIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => GameplayRoute,
+} as any)
+const AccountCreateRoute = AccountCreateRouteImport.update({
+  id: '/account/create',
+  path: '/account/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/colors': typeof ColorsRoute
-  '/create-account': typeof CreateAccountRoute
-  '/': typeof AuthenticatedIndexRoute
-  '/gameplay/$id': typeof AuthenticatedGameplayIdRoute
-  '/settings/account': typeof AuthenticatedSettingsAccountRoute
-  '/settings': typeof AuthenticatedSettingsIndexRoute
-  '/settings/audio/$audioTrackId/$audioEventId': typeof AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute
-  '/settings/audio/$audioTrackId': typeof AuthenticatedSettingsAudioAudioTrackIdIndexRoute
+  '/gameplay': typeof GameplayRouteWithChildren
+  '/settings': typeof SettingsRouteWithChildren
+  '/account/create': typeof AccountCreateRoute
+  '/gameplay/$id': typeof GameplayIdRoute
+  '/settings/account': typeof SettingsAccountRoute
+  '/settings/': typeof SettingsIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/colors': typeof ColorsRoute
-  '/create-account': typeof CreateAccountRoute
-  '/': typeof AuthenticatedIndexRoute
-  '/gameplay/$id': typeof AuthenticatedGameplayIdRoute
-  '/settings/account': typeof AuthenticatedSettingsAccountRoute
-  '/settings': typeof AuthenticatedSettingsIndexRoute
-  '/settings/audio/$audioTrackId/$audioEventId': typeof AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute
-  '/settings/audio/$audioTrackId': typeof AuthenticatedSettingsAudioAudioTrackIdIndexRoute
+  '/gameplay': typeof GameplayRouteWithChildren
+  '/account/create': typeof AccountCreateRoute
+  '/gameplay/$id': typeof GameplayIdRoute
+  '/settings/account': typeof SettingsAccountRoute
+  '/settings': typeof SettingsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/': typeof IndexRoute
   '/colors': typeof ColorsRoute
-  '/create-account': typeof CreateAccountRoute
-  '/_authenticated/': typeof AuthenticatedIndexRoute
-  '/_authenticated/gameplay/$id': typeof AuthenticatedGameplayIdRoute
-  '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
-  '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/_authenticated/settings/audio/$audioTrackId/$audioEventId': typeof AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute
-  '/_authenticated/settings/audio/$audioTrackId/': typeof AuthenticatedSettingsAudioAudioTrackIdIndexRoute
+  '/gameplay': typeof GameplayRouteWithChildren
+  '/settings': typeof SettingsRouteWithChildren
+  '/account/create': typeof AccountCreateRoute
+  '/gameplay/$id': typeof GameplayIdRoute
+  '/settings/account': typeof SettingsAccountRoute
+  '/settings/': typeof SettingsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/colors'
-    | '/create-account'
     | '/'
+    | '/colors'
+    | '/gameplay'
+    | '/settings'
+    | '/account/create'
     | '/gameplay/$id'
     | '/settings/account'
-    | '/settings'
-    | '/settings/audio/$audioTrackId/$audioEventId'
-    | '/settings/audio/$audioTrackId'
+    | '/settings/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/colors'
-    | '/create-account'
     | '/'
+    | '/colors'
+    | '/gameplay'
+    | '/account/create'
     | '/gameplay/$id'
     | '/settings/account'
     | '/settings'
-    | '/settings/audio/$audioTrackId/$audioEventId'
-    | '/settings/audio/$audioTrackId'
   id:
     | '__root__'
-    | '/_authenticated'
+    | '/'
     | '/colors'
-    | '/create-account'
-    | '/_authenticated/'
-    | '/_authenticated/gameplay/$id'
-    | '/_authenticated/settings/account'
-    | '/_authenticated/settings/'
-    | '/_authenticated/settings/audio/$audioTrackId/$audioEventId'
-    | '/_authenticated/settings/audio/$audioTrackId/'
+    | '/gameplay'
+    | '/settings'
+    | '/account/create'
+    | '/gameplay/$id'
+    | '/settings/account'
+    | '/settings/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  IndexRoute: typeof IndexRoute
   ColorsRoute: typeof ColorsRoute
-  CreateAccountRoute: typeof CreateAccountRoute
+  GameplayRoute: typeof GameplayRouteWithChildren
+  SettingsRoute: typeof SettingsRouteWithChildren
+  AccountCreateRoute: typeof AccountCreateRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/create-account': {
-      id: '/create-account'
-      path: '/create-account'
-      fullPath: '/create-account'
-      preLoaderRoute: typeof CreateAccountRouteImport
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gameplay': {
+      id: '/gameplay'
+      path: '/gameplay'
+      fullPath: '/gameplay'
+      preLoaderRoute: typeof GameplayRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/colors': {
@@ -156,86 +152,76 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ColorsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthenticatedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated/': {
-      id: '/_authenticated/'
+    '/': {
+      id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/settings/': {
-      id: '/_authenticated/settings/'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedSettingsIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
+    '/settings/': {
+      id: '/settings/'
+      path: '/'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof SettingsIndexRouteImport
+      parentRoute: typeof SettingsRoute
     }
-    '/_authenticated/settings/account': {
-      id: '/_authenticated/settings/account'
-      path: '/settings/account'
+    '/settings/account': {
+      id: '/settings/account'
+      path: '/account'
       fullPath: '/settings/account'
-      preLoaderRoute: typeof AuthenticatedSettingsAccountRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof SettingsAccountRouteImport
+      parentRoute: typeof SettingsRoute
     }
-    '/_authenticated/gameplay/$id': {
-      id: '/_authenticated/gameplay/$id'
-      path: '/gameplay/$id'
+    '/gameplay/$id': {
+      id: '/gameplay/$id'
+      path: '/$id'
       fullPath: '/gameplay/$id'
-      preLoaderRoute: typeof AuthenticatedGameplayIdRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof GameplayIdRouteImport
+      parentRoute: typeof GameplayRoute
     }
-    '/_authenticated/settings/audio/$audioTrackId/': {
-      id: '/_authenticated/settings/audio/$audioTrackId/'
-      path: '/settings/audio/$audioTrackId'
-      fullPath: '/settings/audio/$audioTrackId'
-      preLoaderRoute: typeof AuthenticatedSettingsAudioAudioTrackIdIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/settings/audio/$audioTrackId/$audioEventId': {
-      id: '/_authenticated/settings/audio/$audioTrackId/$audioEventId'
-      path: '/settings/audio/$audioTrackId/$audioEventId'
-      fullPath: '/settings/audio/$audioTrackId/$audioEventId'
-      preLoaderRoute: typeof AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRouteImport
-      parentRoute: typeof AuthenticatedRoute
+    '/account/create': {
+      id: '/account/create'
+      path: '/account/create'
+      fullPath: '/account/create'
+      preLoaderRoute: typeof AccountCreateRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface AuthenticatedRouteChildren {
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
-  AuthenticatedGameplayIdRoute: typeof AuthenticatedGameplayIdRoute
-  AuthenticatedSettingsAccountRoute: typeof AuthenticatedSettingsAccountRoute
-  AuthenticatedSettingsIndexRoute: typeof AuthenticatedSettingsIndexRoute
-  AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute: typeof AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute
-  AuthenticatedSettingsAudioAudioTrackIdIndexRoute: typeof AuthenticatedSettingsAudioAudioTrackIdIndexRoute
+interface GameplayRouteChildren {
+  GameplayIdRoute: typeof GameplayIdRoute
 }
 
-const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
-  AuthenticatedGameplayIdRoute: AuthenticatedGameplayIdRoute,
-  AuthenticatedSettingsAccountRoute: AuthenticatedSettingsAccountRoute,
-  AuthenticatedSettingsIndexRoute: AuthenticatedSettingsIndexRoute,
-  AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute:
-    AuthenticatedSettingsAudioAudioTrackIdAudioEventIdRoute,
-  AuthenticatedSettingsAudioAudioTrackIdIndexRoute:
-    AuthenticatedSettingsAudioAudioTrackIdIndexRoute,
+const GameplayRouteChildren: GameplayRouteChildren = {
+  GameplayIdRoute: GameplayIdRoute,
 }
 
-const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
-  AuthenticatedRouteChildren,
+const GameplayRouteWithChildren = GameplayRoute._addFileChildren(
+  GameplayRouteChildren,
+)
+
+interface SettingsRouteChildren {
+  SettingsAccountRoute: typeof SettingsAccountRoute
+  SettingsIndexRoute: typeof SettingsIndexRoute
+}
+
+const SettingsRouteChildren: SettingsRouteChildren = {
+  SettingsAccountRoute: SettingsAccountRoute,
+  SettingsIndexRoute: SettingsIndexRoute,
+}
+
+const SettingsRouteWithChildren = SettingsRoute._addFileChildren(
+  SettingsRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  IndexRoute: IndexRoute,
   ColorsRoute: ColorsRoute,
-  CreateAccountRoute: CreateAccountRoute,
+  GameplayRoute: GameplayRouteWithChildren,
+  SettingsRoute: SettingsRouteWithChildren,
+  AccountCreateRoute: AccountCreateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

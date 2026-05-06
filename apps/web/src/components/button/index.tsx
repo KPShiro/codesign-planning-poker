@@ -1,6 +1,8 @@
-import type { ComponentProps, ReactNode } from 'react';
-import FilledButton from './filled-button';
-import OutlinedButton from './outlined-button';
+import { FilledButton } from './filled.button';
+import { GhostButton } from './ghost.button';
+import { OutlinedButton } from './outlined.button';
+
+type ButtonVariant = 'filled' | 'outlined' | 'ghost';
 
 type ButtonSize = 'sm' | 'md';
 
@@ -10,29 +12,29 @@ type ButtonContentProps =
           icon?: never;
       }
     | {
-          icon: ReactNode;
+          icon: React.ReactNode;
           label?: never;
       }
     | {
           label: string;
-          icon: ReactNode;
+          icon: React.ReactNode;
       };
 
-export type BaseButtonProps = ComponentProps<'button'> &
+export type BaseButtonProps = React.ComponentProps<'button'> &
     ButtonContentProps & {
         size?: ButtonSize;
     };
 
 type ButtonProps = BaseButtonProps & {
-    variant: 'filled' | 'outlined';
+    variant: ButtonVariant;
 };
 
-function Button({ variant = 'filled', size = 'md', ...props }: ButtonProps) {
-    if (variant === 'filled') {
-        return <FilledButton {...props} size={size} />;
-    }
+const buttons: Record<ButtonVariant, (props: BaseButtonProps) => React.ReactNode> = {
+    filled: (props: BaseButtonProps) => <FilledButton {...props} />,
+    outlined: (props: BaseButtonProps) => <OutlinedButton {...props} />,
+    ghost: (props: BaseButtonProps) => <GhostButton {...props} />,
+};
 
-    return <OutlinedButton {...props} size={size} />;
+export function Button({ variant = 'filled', size = 'md', ...props }: ButtonProps) {
+    return buttons[variant]({ ...props, size });
 }
-
-export default Button;

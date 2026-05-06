@@ -1,10 +1,14 @@
 import type { User } from '@codesign-planning-poker/shared';
-import { useStickyState } from './use-sticky-state';
 import { generateUUID } from '@utils/generate-uuid';
+import { useStickyState } from './use-sticky-state';
 
 export function usePlayerAccount() {
     const [username, setUsername] = useStickyState<User['name']>({
         storageKey: 'app_username',
+    });
+
+    const [userColor, setUserColor] = useStickyState<User['color']>({
+        storageKey: 'app_userColor',
     });
 
     const [deviceId, setDeviceId] = useStickyState<User['id']>({
@@ -15,6 +19,8 @@ export function usePlayerAccount() {
     return {
         username,
         setUsername,
+        userColor,
+        setUserColor,
         deviceId,
         setDeviceId,
     };

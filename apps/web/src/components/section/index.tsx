@@ -1,37 +1,37 @@
 import { cn } from '@utils/cn';
 import type { ComponentProps } from 'react';
-import SectionContainer from './section-container';
-import SectionButton from './section-button';
+import { SectionButton } from './section-button';
 
-type SectionProps = Pick<ComponentProps<'div'>, 'children' | 'className'> & {
-    title?: string;
-    description?: string;
+export type SectionAction = {
+    label: string;
+    value?: string;
+    variant?: 'button' | 'link';
+    color?: 'default' | 'danger';
+    onClick: () => void;
 };
 
-const Section = (props: SectionProps) => {
+type SectionProps = Pick<ComponentProps<'div'>, 'className'> & {
+    title?: string;
+    description?: string;
+    actions?: SectionAction[];
+};
+
+export const Section = ({ title, description, actions, className }: SectionProps) => {
     return (
-        <div className={cn('flex flex-col gap-3 select-none')}>
-            {props.title ? (
-                <div className="px-4 font-bold text-current/60">{props.title}</div>
+        <div className={cn('flex flex-col gap-4 select-none', className)}>
+            {title ? <div className="text-xs font-semibold uppercase">{title}</div> : null}
+            {actions && actions.length > 0 ? (
+                <div className="bg-surface-1 divide-y divide-current/8 rounded-md py-2">
+                    {actions.map((action, index) => (
+                        <SectionButton key={index} {...action} />
+                    ))}
+                </div>
             ) : null}
-            <div
-                className={cn(
-                    'divide-y divide-current/15 overflow-clip rounded-md bg-current/5',
-                    props.className,
-                )}
-            >
-                {props.children}
-            </div>
-            {props.description ? (
-                <div className="px-4 text-sm text-current/60">{props.description}</div>
+            {description ? (
+                <div className="max-w-prose text-sm text-current/60">{description}</div>
             ) : null}
         </div>
     );
 };
 
 Section.displayName = 'Section';
-
-Section.Container = SectionContainer;
-Section.Button = SectionButton;
-
-export default Section;

@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
 import { useNotifications, type Notification } from '@hooks/use-notifications';
 import { cn } from '@utils/cn';
+import { useEffect } from 'react';
 
 interface NotificationsListItemProps {
     notification: Notification;
 }
 
-const NotificationsListItem = ({ notification }: NotificationsListItemProps) => {
+export const NotificationsListItem = ({ notification }: NotificationsListItemProps) => {
     const { removeNotification } = useNotifications();
 
     useEffect(() => {
@@ -42,5 +42,3 @@ const NotificationsListItem = ({ notification }: NotificationsListItemProps) => 
         </div>
     );
 };
-
-export default NotificationsListItem;

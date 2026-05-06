@@ -1,7 +1,7 @@
 import { useNotifications } from '@hooks/use-notifications';
-import NotificationsListItem from './notifications-list-item';
+import { NotificationsListItem } from './notifications-list-item';
 
-const NotificationsList = () => {
+export const NotificationsList = () => {
     const { notifications } = useNotifications();
 
     if (notifications.length === 0) return null;
@@ -14,5 +14,3 @@ const NotificationsList = () => {
         </div>
     );
 };
-
-export default NotificationsList;

@@ -1,21 +1,33 @@
-import type { Room, User } from '@codesign-planning-poker/shared';
+import type { CardSet, Room, User } from '@codesign-planning-poker/shared';
 import { randomUUID } from 'crypto';
 
 let ROOMS: Room[] = [
     {
-        id: 'test-room-1',
-        name: 'Test Room 1',
+        id: 'eclipse',
+        icon: '🌙',
+        name: 'Eclipse',
         users: [],
+        cardSetId: 'fibonacci',
+        status: 'voting',
+    },
+    {
+        id: 'nova',
+        icon: '🌟',
+        name: 'Nova',
+        users: [],
+        cardSetId: 't-shirt-sizes',
         status: 'voting',
     },
 ];
 
 export const RoomService = {
-    createRoom: (name: string): Room => {
+    createRoom: (name: string, icon: string, cardSetId: CardSet['id']): Room => {
         const newRoom: Room = {
             id: randomUUID(),
             name: name,
+            icon: icon,
             users: [],
+            cardSetId: cardSetId,
             status: 'voting',
         };
 

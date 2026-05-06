@@ -10,7 +10,7 @@ type SliderProps = ComponentProps<typeof RadixSlider.Root> &
         defaultValue: number[];
     }>;
 
-function Slider({ className, ...props }: SliderProps) {
+export function Slider({ className, ...props }: SliderProps) {
     return (
         <RadixSlider.Root
             {...props}
@@ -34,5 +34,3 @@ function Slider({ className, ...props }: SliderProps) {
         </RadixSlider.Root>
     );
 }
-
-export default Slider;

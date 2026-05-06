@@ -1,11 +1,11 @@
 import {
+    NotificationsContext,
     type Notification,
     type NotificationConfig,
-    NotificationsContext,
 } from '@hooks/use-notifications';
-import NotificationsList from './notifications-list';
 import { generateUUID } from '@utils/generate-uuid';
 import { useCallback, useMemo, useState, type PropsWithChildren } from 'react';
+import { NotificationsList } from './notifications-list';
 
 export function NotificationsProvider({ children }: PropsWithChildren) {
     const [notifications, setNotifications] = useState<Notification[]>([]);

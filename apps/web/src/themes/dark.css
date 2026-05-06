@@ -1,10 +1,7 @@
 @media (prefers-color-scheme: dark) {
     :root {
-        --codesign-color-primary: var(--color-blue-500);
-        --codesign-color-on-primary: var(--color-blue-950);
-
-        --codesign-color-secondary: var(--color-blue-900);
-        --codesign-color-on-secondary: var(--color-blue-200);
+        --codesign-color-primary: var(--color-blue-600);
+        --codesign-color-on-primary: var(--color-blue-50);
 
         --codesign-color-danger: var(--color-rose-500);
         --codesign-color-on-danger: var(--color-rose-950);
@@ -18,15 +15,26 @@
         --codesign-color-surface-0: var(--color-zinc-950);
         --codesign-color-on-surface-0: var(--color-zinc-100);
 
-        --codesign-color-surface-1: var(--color-zinc-900);
-        --codesign-color-on-surface-1: var(--color-zinc-200);
+        --codesign-color-surface-1: color-mix(
+            in srgb,
+            var(--codesign-color-surface-0) 95%,
+            var(--color-white)
+        );
+        --codesign-color-on-surface-1: color-mix(
+            in srgb,
+            var(--codesign-color-surface-1) 5%,
+            var(--color-white)
+        );
 
-        --codesign-color-surface-2: var(--color-zinc-800);
-        --codesign-color-on-surface-2: var(--color-zinc-300);
-
-        --codesign-color-border: var(--color-zinc-700);
-
-        --codesign-color-input-bg: var(--codesign-color-surface-0);
-        --codesign-color-input-text: var(--codesign-color-on-surface-0);
+        --codesign-color-surface-2: color-mix(
+            in srgb,
+            var(--codesign-color-surface-1) 95%,
+            var(--color-white)
+        );
+        --codesign-color-on-surface-2: color-mix(
+            in srgb,
+            var(--codesign-color-surface-2) 5%,
+            var(--color-white)
+        );
     }
 }

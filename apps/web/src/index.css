@@ -7,9 +7,6 @@
     --color-primary: var(--codesign-color-primary);
     --color-on-primary: var(--codesign-color-on-primary);
 
-    --color-secondary: var(--codesign-color-secondary);
-    --color-on-secondary: var(--codesign-color-on-secondary);
-
     --color-danger: var(--codesign-color-danger);
     --color-on-danger: var(--codesign-color-on-danger);
 
@@ -28,16 +25,18 @@
     --color-surface-2: var(--codesign-color-surface-2);
     --color-on-surface-2: var(--codesign-color-on-surface-2);
 
-    --color-border: var(--codesign-color-border);
-
-    --color-input-bg: var(--codesign-color-input-bg);
-    --color-input-text: var(--codesign-color-input-text);
-
     --font-sans: 'Arial', system-ui, sans-serif;
 
     --opacity-disabled: 0.5;
 
+    --z-navbar: 10;
     --z-notifications: 100;
+
+    --breakpoint-mobile: 0px;
+    --breakpoint-tablet: 768px;
+    --breakpoint-desktop: 1024px;
+
+    --container-page: 1024px;
 
     --animate-timer-progress: timer-progress 3s linear;
     --animate-slide-in: slide-in 0.25s linear;
@@ -80,27 +79,15 @@ body {
 }
 
 h1 {
-    @apply text-3xl leading-tight;
+    @apply text-2xl leading-tight;
 }
 
 h2 {
-    @apply text-2xl leading-normal;
-}
-
-h3 {
     @apply text-xl leading-normal;
 }
 
-h4 {
+h3 {
     @apply text-lg leading-normal;
-}
-
-h5 {
-    @apply leading-normal;
-}
-
-h6 {
-    @apply text-sm leading-normal font-medium;
 }
 
 p {

@@ -9,7 +9,7 @@ import { useEmoji } from '@hooks/use-emoji';
 import { useForm } from '@tanstack/react-form';
 import { cn } from '@utils/cn';
 import { type ComponentProps } from 'react';
-import { RoomsListItem } from '../rooms-list/rooms-list-item';
+import { RoomWidget } from '../rooms-list/room-widget';
 import { createRoomFormSchema, type CreateRoomFormOutput } from './schema';
 
 type CreateRoomFormProps = Pick<ComponentProps<'form'>, 'className'> & {
@@ -18,7 +18,7 @@ type CreateRoomFormProps = Pick<ComponentProps<'form'>, 'className'> & {
 };
 
 export function CreateRoomForm({ onSubmit, isPending, ...props }: CreateRoomFormProps) {
-    const { emojis } = useEmoji();
+    const { emojis, getEmojiById } = useEmoji();
 
     const form = useForm({
         defaultValues: {
@@ -47,8 +47,8 @@ export function CreateRoomForm({ onSubmit, isPending, ...props }: CreateRoomForm
                 <form.Subscribe
                     selector={(state) => [state.values]}
                     children={([values]) => (
-                        <RoomsListItem
-                            emojiId={values.emojiId || emojis[0].id}
+                        <RoomWidget
+                            icon={getEmojiById(values.emojiId).symbol || emojis[0].id}
                             textPrimary={values.name || 'Example Room Name'}
                             textSecondary={CardSets[values.cardSetId]?.name}
                         />

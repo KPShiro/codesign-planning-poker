@@ -1,83 +1,45 @@
-import type { EmojiId } from '@codesign-planning-poker/shared';
-import { Button } from '@components/button';
+import { CardSets, type Room } from '@codesign-planning-poker/shared';
+import { useDeleteRoomAction } from '@features/lobby/hooks/use-delete-room.action';
 import { useEmoji } from '@hooks/use-emoji';
-import { cn } from '@utils/cn';
-import { EditIcon, TrashIcon } from 'lucide-react';
+import { useNavigate } from '@tanstack/react-router';
 import type { ComponentProps } from 'react';
+import { RoomWidget } from './room-widget';
 
 type RoomsListItemProps = Pick<ComponentProps<'div'>, 'className'> & {
-    emojiId: EmojiId;
-    textPrimary: string;
-    textSecondary: string;
-    disabled?: boolean;
-    onDeleteClick?: () => void;
-    onEditClick?: () => void;
-    onJoinClick?: () => void;
+    room: Pick<Room, 'id' | 'emojiId' | 'name' | 'cardSetId'>;
 };
 
-export function RoomsListItem({
-    emojiId,
-    textPrimary,
-    textSecondary,
-    className,
-    disabled,
-    onDeleteClick,
-    onEditClick,
-    onJoinClick,
-}: RoomsListItemProps) {
+export function RoomsListItem({ room, className }: RoomsListItemProps) {
+    const navigate = useNavigate();
+
     const { getEmojiById } = useEmoji();
-    const emoji = getEmojiById(emojiId);
+    const emoji = getEmojiById(room.emojiId);
+
+    const deleteRoomAction = useDeleteRoomAction();
+
+    const handleOnGamesListItemClick = (roomId: Room['id']) => {
+        navigate({ to: `/gameplay/${roomId}` });
+    };
+
+    const handleOnEditRoomClick = (roomId: Room['id']) => {
+        throw new Error(`[${roomId}] Not Implemented!`);
+    };
 
     return (
-        <div
-            className={cn(
-                'flex items-center gap-4 p-4 select-none',
-                'bg-surface-1 rounded-md',
-                className,
-            )}
-        >
-            <div className="flex min-w-0 flex-1 items-center gap-4">
-                {emoji ? (
-                    <div
-                        className={cn(
-                            'bg-surface-2 text-on-surface-2 @container flex size-12 shrink-0 grow-0 items-center justify-center rounded-sm',
-                            'max-tablet:hidden',
-                        )}
-                    >
-                        <span className="text-[50cqw]">{emoji.symbol}</span>
-                    </div>
-                ) : null}
-                <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="truncate">{textPrimary}</span>
-                    <span className="truncate text-xs text-current/60">{textSecondary}</span>
-                </div>
-            </div>
-            <div className="flex items-center gap-4">
-                <div className="flex gap-2">
-                    <Button
-                        variant="outlined"
-                        icon={<TrashIcon />}
-                        title="Delete"
-                        onClick={onDeleteClick}
-                        disabled={disabled}
-                    />
-                    <Button
-                        variant="outlined"
-                        icon={<EditIcon />}
-                        title="Edit"
-                        onClick={onEditClick}
-                        disabled={disabled}
-                    />
-                </div>
-                <div className="h-2 w-0.5 bg-current/15"></div>
-                <Button
-                    variant="outlined"
-                    title="Join"
-                    label="Join"
-                    onClick={onJoinClick}
-                    disabled={disabled}
-                />
-            </div>
-        </div>
+        <RoomWidget
+            icon={emoji.symbol}
+            textPrimary={room.name}
+            textSecondary={CardSets[room.cardSetId].name}
+            disabled={deleteRoomAction.isPending}
+            onDeleteClick={async () => {
+                await deleteRoomAction.execute({
+                    id: room.id,
+                    name: room.name,
+                });
+            }}
+            onEditClick={() => handleOnEditRoomClick(room.id)}
+            onJoinClick={() => handleOnGamesListItemClick(room.id)}
+            className={className}
+        />
     );
 }

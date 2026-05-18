@@ -4,7 +4,17 @@ export function useEmoji() {
     const emojis = [...Emojis].sort((a, b) => (a.id > b.id ? 1 : -1));
 
     const getEmojiById = (id: EmojiId) => {
-        return emojis.find((emoji) => emoji.id === id);
+        const emoji = emojis.find((emoji) => emoji.id === id);
+
+        if (!emoji) {
+            return {
+                id: 'white-question-mark',
+                symbol: '❔',
+                disabled: false,
+            };
+        }
+
+        return emoji;
     };
 
     return {

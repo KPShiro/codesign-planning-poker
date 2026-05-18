@@ -1,6 +1,6 @@
 import { LocalStorage } from '@utils/local-storage';
 import { useMemo } from 'react';
-import { useRoomsListQuery } from './use-rooms-list-query';
+import { useRoomsListQuery } from './use-rooms-list.query';
 
 export function useRoomsList() {
     const { data } = useRoomsListQuery();

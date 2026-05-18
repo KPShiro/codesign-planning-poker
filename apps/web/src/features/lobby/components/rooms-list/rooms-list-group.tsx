@@ -1,11 +1,11 @@
 import { cn } from '@utils/cn';
 import type { ComponentProps } from 'react';
 
-type GamesListGroupProps = ComponentProps<'div'> & {
+type RoomsListGroupProps = ComponentProps<'div'> & {
     label: string;
 };
 
-export function GamesListGroup({ label, className, children, ...props }: GamesListGroupProps) {
+export function RoomsListGroup({ label, className, children, ...props }: RoomsListGroupProps) {
     return (
         <div {...props} className={cn('flex flex-col gap-4', className)}>
             <div className="text-xs font-semibold uppercase">{label}</div>

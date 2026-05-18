@@ -26,15 +26,17 @@ export function useRoom(roomId: Room['id'], options?: UseRoomProps) {
 
     useEffect(() => {
         const deviceId = LocalStorage.getData('app_deviceId');
-        const username = LocalStorage.getData('app_username');
+        const userName = LocalStorage.getData('app_userName');
+        const userColor = LocalStorage.getData('app_userColor');
 
-        if (!username || !deviceId) {
+        if (!userName || !deviceId) {
             return;
         }
 
         socket.auth = {
             deviceId: deviceId,
-            username: username,
+            userName: userName,
+            userColor: userColor,
         };
 
         socket.connect();

@@ -11,7 +11,7 @@ const PORT: number = 3000;
 
 const corsOptions: cors.CorsOptions = {
     origin: true,
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'DELETE'],
     credentials: true,
 };
 

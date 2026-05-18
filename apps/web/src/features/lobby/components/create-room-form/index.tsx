@@ -1,37 +1,35 @@
+import { CardSets, type CardSetId } from '@codesign-planning-poker/shared';
 import { Button } from '@components/button';
-import { ColorSelector } from '@components/form/color-selector';
+import { EmojiSelector } from '@components/form/emoji-selector';
 import { FormError } from '@components/form/form-error';
 import { FormField } from '@components/form/form-field';
 import { FormLabel } from '@components/form/form-label';
 import { TextInput } from '@components/form/text-input';
-import { usePlayerAccount } from '@hooks/use-player-account';
+import { useEmoji } from '@hooks/use-emoji';
 import { useForm } from '@tanstack/react-form';
 import { cn } from '@utils/cn';
 import { type ComponentProps } from 'react';
-import { accountFormSchema, type AccountFormOutput } from './schema';
+import { RoomsListItem } from '../rooms-list/rooms-list-item';
+import { createRoomFormSchema, type CreateRoomFormOutput } from './schema';
 
-const availableColors = ['#155dfc', '#ff2056', '#fd9a00', '#00c950'];
-
-type AccountFormProps = Pick<ComponentProps<'form'>, 'className'> & {
-    onSubmit?: (value: AccountFormOutput) => void | Promise<void>;
-    submitLabel?: string;
-    resetLabel?: string;
+type CreateRoomFormProps = Pick<ComponentProps<'form'>, 'className'> & {
+    onSubmit?: (value: CreateRoomFormOutput) => void | Promise<void>;
+    isPending?: boolean;
 };
 
-export function AccountForm({ onSubmit, submitLabel, resetLabel, ...props }: AccountFormProps) {
-    const playerAccount = usePlayerAccount();
+export function CreateRoomForm({ onSubmit, isPending, ...props }: CreateRoomFormProps) {
+    const { emojis } = useEmoji();
 
     const form = useForm({
         defaultValues: {
-            username: playerAccount.username || '',
-            color: playerAccount.userColor || '',
+            name: '',
+            emojiId: emojis[0].id,
+            cardSetId: CardSets['fibonacci'].id as CardSetId,
         },
         validators: {
-            onChange: accountFormSchema,
+            onChange: createRoomFormSchema,
         },
         onSubmit: async ({ value }) => {
-            playerAccount.setUsername(value.username);
-            playerAccount.setUserColor(value.color);
             await onSubmit?.(value);
             form.reset(value);
         },
@@ -45,20 +43,29 @@ export function AccountForm({ onSubmit, submitLabel, resetLabel, ...props }: Acc
             }}
             className={cn('flex flex-col gap-6', props.className)}
         >
+            <div className="rounded-md border-2 border-dashed border-current/15 p-4">
+                <form.Subscribe
+                    selector={(state) => [state.values]}
+                    children={([values]) => (
+                        <RoomsListItem
+                            emojiId={values.emojiId || emojis[0].id}
+                            textPrimary={values.name || 'Example Room Name'}
+                            textSecondary={CardSets[values.cardSetId]?.name}
+                        />
+                    )}
+                />
+            </div>
             <div className="bg-surface-1 flex flex-col gap-4 rounded-md p-6">
                 <form.Field
-                    name="username"
+                    name="emojiId"
                     children={(field) => (
                         <FormField>
-                            <FormLabel htmlFor={field.name}>Username</FormLabel>
-                            <TextInput
+                            <FormLabel htmlFor={field.name}>Icon</FormLabel>
+                            <EmojiSelector
                                 id={field.name}
-                                name={field.name}
-                                placeholder="e.g. Coder420"
-                                autoComplete="given-name"
                                 value={field.state.value}
-                                onBlur={field.handleBlur}
                                 onValueChange={field.handleChange}
+                                disabled={isPending}
                             />
                             {!field.state.meta.isValid && field.state.meta.isDirty ? (
                                 <FormError>
@@ -71,15 +78,18 @@ export function AccountForm({ onSubmit, submitLabel, resetLabel, ...props }: Acc
                     )}
                 />
                 <form.Field
-                    name="color"
+                    name="name"
                     children={(field) => (
                         <FormField>
-                            <FormLabel htmlFor={field.name}>Color</FormLabel>
-                            <ColorSelector
-                                valuesList={availableColors}
+                            <FormLabel htmlFor={field.name}>Name</FormLabel>
+                            <TextInput
+                                id={field.name}
                                 name={field.name}
+                                placeholder="e.g. Quack Room"
                                 value={field.state.value}
+                                onBlur={field.handleBlur}
                                 onValueChange={field.handleChange}
+                                disabled={isPending}
                             />
                             {!field.state.meta.isValid && field.state.meta.isDirty ? (
                                 <FormError>
@@ -99,8 +109,8 @@ export function AccountForm({ onSubmit, submitLabel, resetLabel, ...props }: Acc
                         <Button
                             type="submit"
                             variant="filled"
-                            label={submitLabel || 'Confirm'}
-                            disabled={!canSubmit || isPristine}
+                            label="Create Room"
+                            disabled={!canSubmit || isPristine || isPending}
                             onClick={form.handleSubmit}
                         />
                     )}
@@ -109,9 +119,11 @@ export function AccountForm({ onSubmit, submitLabel, resetLabel, ...props }: Acc
                     selector={(state) => [state.isTouched]}
                     children={([isTouched]) => (
                         <Button
+                            type="button"
                             variant="outlined"
-                            label={resetLabel || 'Reset'}
-                            disabled={!isTouched}
+                            size="md"
+                            label="Reset"
+                            disabled={!isTouched || isPending}
                             onClick={() => form.reset()}
                         />
                     )}

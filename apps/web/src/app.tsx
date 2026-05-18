@@ -1,8 +1,8 @@
 import { routeTree } from './routeTree.gen';
 
-import { RouterProvider, createRouter } from '@tanstack/react-router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NotificationsProvider } from '@components/notifications/notifications-provider';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 
 const router = createRouter({ routeTree });
 

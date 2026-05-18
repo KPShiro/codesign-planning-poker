@@ -6,7 +6,8 @@ export const registerRoomHandlers = (io: IOServer, socket: IOSocket) => {
     socket.on('room:join', (roomId) => {
         const newUser: User = {
             id: socket.data.deviceId,
-            name: socket.data.username,
+            name: socket.data.userName,
+            color: socket.data.userColor,
         };
 
         const existingUser = RoomService.getUserById(roomId, socket.data.deviceId);
@@ -39,7 +40,7 @@ export const registerRoomHandlers = (io: IOServer, socket: IOSocket) => {
 
         if (updatedRoom) {
             socket.leave(roomId);
-            io.to(roomId).emit('room:user-left', socket.data.username);
+            io.to(roomId).emit('room:user-left', socket.data.userName);
             io.to(roomId).emit('room:updated', updatedRoom);
         }
     });

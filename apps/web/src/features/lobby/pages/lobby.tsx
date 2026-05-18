@@ -3,7 +3,7 @@ import { NavbarPageLayout } from '@components/page-layout/navbar-page-layout';
 import { PageHeader } from '@components/page/page-header';
 import { Link } from '@tanstack/react-router';
 import { PlusIcon, SettingsIcon } from 'lucide-react';
-import { GamesList } from '../components/rooms-list/games-list';
+import { RoomsList } from '../components/rooms-list/rooms-list';
 
 export function LobbyPage() {
     return (
@@ -18,12 +18,12 @@ export function LobbyPage() {
                 title={'Available Rooms'}
                 description={'Join an active session or create a new room to start estimating.'}
                 action={
-                    <Link to="/">
+                    <Link to="/room/create">
                         <Button variant="filled" icon={<PlusIcon />} label="Create Room" />
                     </Link>
                 }
             />
-            <GamesList />
+            <RoomsList />
         </NavbarPageLayout>
     );
 }

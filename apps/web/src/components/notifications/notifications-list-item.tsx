@@ -24,11 +24,18 @@ export const NotificationsListItem = ({ notification }: NotificationsListItemPro
     return (
         <div
             className={cn(
-                'bg-surface-1 text-on-surface-1 relative isolate rounded-md border border-current/15 px-6 py-3',
+                'bg-surface-1 text-on-surface-1 relative isolate rounded-md border border-current/15 p-6 select-none',
                 'animate-slide-in overflow-clip',
             )}
         >
-            <span className="text-sm font-medium">{notification.message}</span>
+            <div className="flex flex-col gap-1">
+                {notification.title ? (
+                    <span className="text-sm font-semibold">{notification.title}</span>
+                ) : null}
+                {notification.message ? (
+                    <span className="text-sm nth-[2]:text-current/60">{notification.message}</span>
+                ) : null}
+            </div>
             {notification.duration ? (
                 <div className="absolute top-0 right-0 left-0 h-1 bg-current/15">
                     <div

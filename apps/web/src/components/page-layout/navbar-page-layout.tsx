@@ -9,7 +9,7 @@ type NavbarPageLayoutProps = Pick<ComponentProps<'div'>, 'children' | 'className
 
 export function NavbarPageLayout({ className, children, actions }: NavbarPageLayoutProps) {
     return (
-        <div className="min-h-dvh">
+        <div className="max-tablet:pt-safe-top max-tablet:pb-safe-bottom min-h-dvh">
             <Navbar actions={actions} />
             <PageContainer className={cn('flex flex-col gap-6 py-10', className)}>
                 {children}

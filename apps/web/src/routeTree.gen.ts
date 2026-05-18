@@ -10,17 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as RoomRouteImport } from './routes/room'
 import { Route as GameplayRouteImport } from './routes/gameplay'
 import { Route as ColorsRouteImport } from './routes/colors'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SettingsIndexRouteImport } from './routes/settings.index'
 import { Route as SettingsAccountRouteImport } from './routes/settings.account'
+import { Route as RoomCreateRouteImport } from './routes/room.create'
 import { Route as GameplayIdRouteImport } from './routes/gameplay.$id'
 import { Route as AccountCreateRouteImport } from './routes/account.create'
 
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoomRoute = RoomRouteImport.update({
+  id: '/room',
+  path: '/room',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GameplayRoute = GameplayRouteImport.update({
@@ -48,6 +55,11 @@ const SettingsAccountRoute = SettingsAccountRouteImport.update({
   path: '/account',
   getParentRoute: () => SettingsRoute,
 } as any)
+const RoomCreateRoute = RoomCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => RoomRoute,
+} as any)
 const GameplayIdRoute = GameplayIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -63,9 +75,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/colors': typeof ColorsRoute
   '/gameplay': typeof GameplayRouteWithChildren
+  '/room': typeof RoomRouteWithChildren
   '/settings': typeof SettingsRouteWithChildren
   '/account/create': typeof AccountCreateRoute
   '/gameplay/$id': typeof GameplayIdRoute
+  '/room/create': typeof RoomCreateRoute
   '/settings/account': typeof SettingsAccountRoute
   '/settings/': typeof SettingsIndexRoute
 }
@@ -73,8 +87,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/colors': typeof ColorsRoute
   '/gameplay': typeof GameplayRouteWithChildren
+  '/room': typeof RoomRouteWithChildren
   '/account/create': typeof AccountCreateRoute
   '/gameplay/$id': typeof GameplayIdRoute
+  '/room/create': typeof RoomCreateRoute
   '/settings/account': typeof SettingsAccountRoute
   '/settings': typeof SettingsIndexRoute
 }
@@ -83,9 +99,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/colors': typeof ColorsRoute
   '/gameplay': typeof GameplayRouteWithChildren
+  '/room': typeof RoomRouteWithChildren
   '/settings': typeof SettingsRouteWithChildren
   '/account/create': typeof AccountCreateRoute
   '/gameplay/$id': typeof GameplayIdRoute
+  '/room/create': typeof RoomCreateRoute
   '/settings/account': typeof SettingsAccountRoute
   '/settings/': typeof SettingsIndexRoute
 }
@@ -95,9 +113,11 @@ export interface FileRouteTypes {
     | '/'
     | '/colors'
     | '/gameplay'
+    | '/room'
     | '/settings'
     | '/account/create'
     | '/gameplay/$id'
+    | '/room/create'
     | '/settings/account'
     | '/settings/'
   fileRoutesByTo: FileRoutesByTo
@@ -105,8 +125,10 @@ export interface FileRouteTypes {
     | '/'
     | '/colors'
     | '/gameplay'
+    | '/room'
     | '/account/create'
     | '/gameplay/$id'
+    | '/room/create'
     | '/settings/account'
     | '/settings'
   id:
@@ -114,9 +136,11 @@ export interface FileRouteTypes {
     | '/'
     | '/colors'
     | '/gameplay'
+    | '/room'
     | '/settings'
     | '/account/create'
     | '/gameplay/$id'
+    | '/room/create'
     | '/settings/account'
     | '/settings/'
   fileRoutesById: FileRoutesById
@@ -125,6 +149,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ColorsRoute: typeof ColorsRoute
   GameplayRoute: typeof GameplayRouteWithChildren
+  RoomRoute: typeof RoomRouteWithChildren
   SettingsRoute: typeof SettingsRouteWithChildren
   AccountCreateRoute: typeof AccountCreateRoute
 }
@@ -136,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/room': {
+      id: '/room'
+      path: '/room'
+      fullPath: '/room'
+      preLoaderRoute: typeof RoomRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gameplay': {
@@ -173,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsAccountRouteImport
       parentRoute: typeof SettingsRoute
     }
+    '/room/create': {
+      id: '/room/create'
+      path: '/create'
+      fullPath: '/room/create'
+      preLoaderRoute: typeof RoomCreateRouteImport
+      parentRoute: typeof RoomRoute
+    }
     '/gameplay/$id': {
       id: '/gameplay/$id'
       path: '/$id'
@@ -202,6 +241,16 @@ const GameplayRouteWithChildren = GameplayRoute._addFileChildren(
   GameplayRouteChildren,
 )
 
+interface RoomRouteChildren {
+  RoomCreateRoute: typeof RoomCreateRoute
+}
+
+const RoomRouteChildren: RoomRouteChildren = {
+  RoomCreateRoute: RoomCreateRoute,
+}
+
+const RoomRouteWithChildren = RoomRoute._addFileChildren(RoomRouteChildren)
+
 interface SettingsRouteChildren {
   SettingsAccountRoute: typeof SettingsAccountRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
@@ -220,6 +269,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ColorsRoute: ColorsRoute,
   GameplayRoute: GameplayRouteWithChildren,
+  RoomRoute: RoomRouteWithChildren,
   SettingsRoute: SettingsRouteWithChildren,
   AccountCreateRoute: AccountCreateRoute,
 }

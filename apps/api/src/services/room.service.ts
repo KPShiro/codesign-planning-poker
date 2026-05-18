@@ -1,31 +1,27 @@
-import type { CardSet, Room, User } from '@codesign-planning-poker/shared';
+import { Emojis, type Room, type User } from '@codesign-planning-poker/shared';
 import { randomUUID } from 'crypto';
 
 let ROOMS: Room[] = [
     {
         id: 'eclipse',
-        icon: '🌙',
+        emojiId: Emojis[0].id,
         name: 'Eclipse',
         users: [],
         cardSetId: 'fibonacci',
         status: 'voting',
     },
-    {
-        id: 'nova',
-        icon: '🌟',
-        name: 'Nova',
-        users: [],
-        cardSetId: 't-shirt-sizes',
-        status: 'voting',
-    },
 ];
 
 export const RoomService = {
-    createRoom: (name: string, icon: string, cardSetId: CardSet['id']): Room => {
+    createRoom: (
+        name: Room['name'],
+        emojiId: Room['emojiId'],
+        cardSetId: Room['cardSetId'],
+    ): Room[] => {
         const newRoom: Room = {
             id: randomUUID(),
             name: name,
-            icon: icon,
+            emojiId: emojiId,
             users: [],
             cardSetId: cardSetId,
             status: 'voting',
@@ -33,7 +29,7 @@ export const RoomService = {
 
         ROOMS = [...ROOMS, newRoom];
 
-        return newRoom;
+        return ROOMS;
     },
     deleteRoom: (roomId: Room['id']): Room[] => {
         ROOMS = ROOMS.filter((r) => r.id !== roomId);

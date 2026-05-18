@@ -4,7 +4,7 @@ import { useStickyState } from './use-sticky-state';
 
 export function usePlayerAccount() {
     const [username, setUsername] = useStickyState<User['name']>({
-        storageKey: 'app_username',
+        storageKey: 'app_userName',
     });
 
     const [userColor, setUserColor] = useStickyState<User['color']>({

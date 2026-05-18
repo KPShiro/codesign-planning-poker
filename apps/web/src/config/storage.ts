@@ -1,5 +1,5 @@
 export const STORAGE_KEYS = {
-    USERNAME: 'app_username',
+    USERNAME: 'app_userName',
     USER_COLOR: 'app_userColor',
     DEVICE_ID: 'app_deviceId',
     RECENT_ROOM_ID: 'app_recentRoomId',

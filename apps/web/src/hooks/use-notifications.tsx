@@ -1,8 +1,11 @@
 import { createContext, useContext, type ReactNode } from 'react';
 
+export type NotificationType = 'info' | 'danger' | 'warning' | 'success';
+
 export type Notification = {
     id: string;
-    type: 'info' | 'danger' | 'warning' | 'success';
+    type: NotificationType;
+    title?: ReactNode;
     message: ReactNode;
     duration?: number;
 };

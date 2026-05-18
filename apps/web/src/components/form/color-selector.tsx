@@ -14,7 +14,7 @@ export function ColorSelector({
     ...inputProps
 }: ColorSelectorProps) {
     return (
-        <div className={cn('flex gap-1', className)}>
+        <div className={cn('flex flex-wrap gap-1', className)}>
             <input
                 {...inputProps}
                 type="color"
@@ -28,10 +28,13 @@ export function ColorSelector({
                     type="button"
                     onClick={() => onValueChange(color)}
                     disabled={inputProps.disabled}
+                    {...(value === color && { 'data-selected': true })}
                     className={cn(
-                        'size-10 cursor-pointer rounded-md border-2 p-1',
+                        'group size-12 cursor-pointer rounded-md border-2 border-current/15 p-1',
+                        'data-selected:border-current',
+                        'enabled:hover:border-current',
+                        'enabled:focus:border-current',
                         'disabled:opacity-disabled disabled:cursor-default',
-                        value === color ? 'border-current' : 'border-current/15',
                     )}
                 >
                     <div className="size-full rounded-xs" style={{ backgroundColor: color }}></div>

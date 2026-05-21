@@ -1,0 +1,88 @@
+@property --crt-duration {
+    syntax: '<time>';
+    inherits: true;
+}
+
+@keyframes animate-crt {
+    to {
+        background-position: 0 100%;
+    }
+}
+
+@keyframes animate-crt-flicker {
+    0%,
+    100% {
+        filter: brightness(1);
+    }
+    25% {
+        filter: brightness(0.75);
+    }
+    50% {
+        filter: brightness(1.05);
+    }
+    75% {
+        filter: brightness(0.85);
+    }
+}
+
+@utility crt {
+    & {
+        position: relative;
+        isolation: isolate;
+    }
+
+    &::after {
+        --_crt-color-1: transparent;
+        --_crt-color-2: color-mix(
+            in srgb,
+            var(--crt-color, currentcolor) var(--crt-color-opacity, 15%),
+            transparent
+        );
+        --_crt-size: var(--crt-size, 8px);
+        --_crt-duration: var(--crt-duration, 10s);
+        --_crt-flicker-duration: var(--crt-flicker-duration, 1s);
+
+        content: '';
+        position: absolute;
+        z-index: 999;
+        inset: 0;
+        pointer-events: none;
+
+        background: linear-gradient(
+            to bottom,
+            var(--_crt-color-1) 50%,
+            var(--_crt-color-2) 50%,
+            var(--_crt-color-2) 100%,
+            var(--_crt-color-1) 100%
+        );
+        background-size: cover;
+        background-size: 100% var(--_crt-size);
+
+        mask-image: radial-gradient(circle at center, black 5%, transparent 100%);
+
+        animation:
+            animate-crt var(--_crt-duration) linear infinite,
+            animate-crt-flicker var(--_crt-flicker-duration) linear infinite;
+    }
+}
+
+@utility crt-size-* {
+    --crt-size: --value([length]);
+    --crt-size: calc(--value(integer) * 1px);
+}
+
+@utility crt-color-* {
+    --crt-color: --value(--color-*);
+    --crt-color: --value([color]);
+    --crt-color-opacity: calc(--modifier(integer, 25) * 1%);
+}
+
+@utility crt-duration-* {
+    --crt-duration: --value([*]);
+    --crt-duration: calc(--value(integer) * 1ms);
+}
+
+@utility crt-flicker-duration-* {
+    --crt-flicker-duration: --value([*]);
+    --crt-flicker-duration: calc(--value(integer) * 1ms);
+}

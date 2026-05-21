@@ -3,7 +3,7 @@
 @import './themes/light.css';
 @import './themes/dark.css';
 
-@import './tailwind-utils/scan-lines.css';
+@import './tailwind-utils/crt.css';
 
 @theme {
     --color-primary: var(--codesign-color-primary);

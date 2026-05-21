@@ -3,6 +3,8 @@
 @import './themes/light.css';
 @import './themes/dark.css';
 
+@import './tailwind-utils/scan-lines.css';
+
 @theme {
     --color-primary: var(--codesign-color-primary);
     --color-on-primary: var(--codesign-color-on-primary);
@@ -43,6 +45,8 @@
 
     --container-page: 1024px;
     --container-modal: 640px;
+
+    --aspect-card: 5 / 7;
 
     --animate-timer-progress: timer-progress 3s linear;
     --animate-slide-in: slide-in 0.25s linear;
